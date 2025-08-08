@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #d32f2f;
+}
+
+button {
+  background-color: #d32f2f;
+  border: none;
+  padding: 12px 24px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ff4d4d;
+}
+
+input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d32f2f;
+  background-color: #1c1c1c;
+  color: white;
+  margin-left: 10px;
+}
+
+.container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+.card {
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+}
+
+.turno-display {
+  background-color: #000;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 6em;
+  transition: transform 0.5s ease-in-out;
+  box-shadow: 0 0 60px rgba(211, 47, 47, 0.5);
+  text-shadow: 2px 2px #d32f2f;
+}
+
+.turno-display strong {
+  color: #d32f2f;
+}
+
+.turno-display.animar {
+  transform: scale(1.1);
+}
