@@ -5,7 +5,7 @@ const PanelCajero = () => {
   const [modulo, setModulo] = useState(1);
 
   const llamarSiguiente = async () => {
-    const res = await fetch("https://turnos-backend.onrender.com/api/turnos/siguiente", {
+    const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/siguiente", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

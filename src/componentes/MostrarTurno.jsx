@@ -18,7 +18,7 @@ const MostrarTurno = () => {
   const fetchTurno = async () => {
     if (!audioHabilitado) return;
     try {
-      const res = await fetch("https://turnos-backend.onrender.com/api/turnos/ultimo");
+      const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/ultimo");
       const data = await res.json();
 
       if (data.id && data.id !== ultimoIdRef.current) {

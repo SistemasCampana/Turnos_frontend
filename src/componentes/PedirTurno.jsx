@@ -4,7 +4,7 @@ const PedirTurno = () => {
   const [turno, setTurno] = useState(null);
 
   const pedirTurno = async () => {
-    const res = await fetch("https://turnos-backend.onrender.com/api/turnos/", {
+    const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/", {
       method: 'POST'
     });
     const data = await res.json();

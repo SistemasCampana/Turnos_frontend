@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './componentes/Login';
 import PedirTurno from './componentes/PedirTurno';
 import MostrarTurno from './componentes/MostrarTurno';
 import PanelCajero from './componentes/PanelCajero';
@@ -9,7 +10,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<PedirTurno />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/turno" element={<PedirTurno />} />
         <Route path="/pantalla" element={<MostrarTurno />} />
         <Route path="/panel" element={<PanelCajero />} />
         <Route path="*" element={<div style={{ padding: '2rem' }}><h1>Ruta no encontrada</h1></div>} />
