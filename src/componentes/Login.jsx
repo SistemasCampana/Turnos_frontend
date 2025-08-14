@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./login.css"; // Importa el CSS
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -39,19 +40,22 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Usuario"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
-      />
-      <button type="submit">Ingresar</button>
-    </form>
+    <div className="login-container">
+      <h2>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Usuario"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Contraseña"
+        />
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
   );
 }
