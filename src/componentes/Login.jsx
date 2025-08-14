@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Login.css"; // Aquí pondremos el CSS para animación y fondo
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -17,10 +18,8 @@ export default function Login({ onLogin }) {
         { username, password }
       );
 
-      // Guardar token
       localStorage.setItem("token", res.data.access_token);
 
-      // Llamar a la función del padre
       if (typeof onLogin === "function") {
         onLogin();
       } else {
@@ -40,19 +39,22 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Usuario"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
-      />
-      <button type="submit">Ingresar</button>
-    </form>
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-form animate">
+        <h2>Iniciar Sesión</h2>
+        <input
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Usuario"
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Contraseña"
+        />
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
   );
 }
