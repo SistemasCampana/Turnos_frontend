@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Login.css";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -8,6 +7,7 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log("Usuario enviado:", username);
     console.log("Contraseña enviada:", password);
 
@@ -20,7 +20,7 @@ export default function Login({ onLogin }) {
       // Guardar token
       localStorage.setItem("token", res.data.access_token);
 
-      // Llamar a la función del padre si existe
+      // Llamar a la función del padre
       if (typeof onLogin === "function") {
         onLogin();
       } else {
@@ -40,22 +40,19 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="login-container">
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Usuario"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Contraseña"
-        />
-        <button type="submit">Ingresar</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Usuario"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Contraseña"
+      />
+      <button type="submit">Ingresar</button>
+    </form>
   );
 }
