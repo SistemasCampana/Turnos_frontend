@@ -19,6 +19,10 @@
   width: 300px;
 }
 
+.login-form h2 {
+    color: black;
+}
+
 /* Inputs */
 .login-form input {
   padding: 0.7rem;
