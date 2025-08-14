@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Login.css"; // Aquí pondremos el CSS para animación y fondo
+import "./Login.css"; // Importa el CSS
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
