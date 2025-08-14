@@ -1,0 +1,52 @@
+.pedir-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: black;
+  font-family: sans-serif;
+  align-items: center;
+}
+
+.pedir-card {
+  background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  width: 400px;
+  text-align: center;
+  color: white;
+  margin-top: 5rem;
+}
+
+.pedir-titulo {
+  font-size: 2rem;
+  color: red;
+  margin-bottom: 1.5rem;
+}
+
+.pedir-boton {
+  margin-top: 1rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pedir-boton:hover {
+  background: #b30000;
+}
+
+.pedir-turno-actual {
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}
+
+.pedir-mensaje {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: gray;
+}
