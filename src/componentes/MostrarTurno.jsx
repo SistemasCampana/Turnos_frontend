@@ -19,11 +19,21 @@ const MostrarTurno = () => {
 
   const fetchTurno = async () => {
     if (!audioHabilitado) return;
+
     try {
       const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/ultimo");
+
+      // Validación: si la respuesta no es OK, leer como texto y salir
+      if (!res.ok) {
+        const txt = await res.text();
+        console.error("❌ /ultimo falló:", res.status, txt);
+        return; // No seguimos, porque no hay JSON válido
+      }
+
       const data = await res.json();
 
-      if (data.id && data.id !== ultimoIdRef.current) {
+      // Validación extra: asegurarnos que es un objeto con id
+      if (data && data.id && data.id !== ultimoIdRef.current) {
         ultimoIdRef.current = data.id;
         if (audioRef.current) audioRef.current.play();
         setTurnoActual(data);
@@ -32,8 +42,9 @@ const MostrarTurno = () => {
 
         setTimeout(() => setMostrarAnimacion(false), 4000);
       }
+
     } catch (error) {
-      console.error("Error obteniendo turno:", error);
+      console.error("⚠️ Error obteniendo turno:", error);
     }
   };
 

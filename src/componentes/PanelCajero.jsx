@@ -7,17 +7,28 @@ const PanelCajero = () => {
   const [modulo, setModulo] = useState(1);
 
   const llamarSiguiente = async () => {
+  try {
     const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/siguiente", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ modulo })
     });
 
+    if (!res.ok) {
+      const txt = await res.text(); // leer como texto para evitar error al parsear HTML
+      console.error("❌ /siguiente falló:", res.status, txt);
+      alert(`Error del servidor (${res.status}): ${txt}`);
+      return;
+    }
+
     const data = await res.json();
     setTurno(data);
-  };
+
+  } catch (err) {
+    console.error("⚠️ Error de red al llamar siguiente:", err);
+    alert("No se pudo conectar al servidor. Intenta de nuevo.");
+  }
+};
 
   return (
     <div className="panel-cajero-container">
