@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./login.css"; // Importa el CSS
+import "./Login.css";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
