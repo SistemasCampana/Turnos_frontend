@@ -1,0 +1,76 @@
+/* Contenedor general */
+.panel-cajero-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: black;
+  font-family: sans-serif;
+}
+
+/* Contenido centrado */
+.panel-cajero-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tarjeta */
+.panel-cajero-card {
+  background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  width: 400px;
+  text-align: center;
+  color: white;
+}
+
+/* Título */
+.panel-cajero-titulo {
+  font-size: 2rem;
+  color: red;
+  margin-bottom: 1.5rem;
+}
+
+/* Input de módulo */
+.panel-cajero-input {
+  width: 80px;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  margin-left: 0.5rem;
+}
+
+/* Botón */
+.panel-cajero-boton {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.panel-cajero-boton:hover {
+  background: #b30000;
+}
+
+/* Texto turno actual */
+.panel-cajero-turno {
+  margin-top: 2rem;
+  font-size: 1.8rem;
+}
+
+/* Mensaje */
+.panel-cajero-mensaje {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: gray;
+}

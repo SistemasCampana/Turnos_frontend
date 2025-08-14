@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from "./Navbar";
+import "./PanelCajero.css";
 
 const PanelCajero = () => {
   const [turno, setTurno] = useState(null);
@@ -18,108 +19,47 @@ const PanelCajero = () => {
     setTurno(data);
   };
 
-  const estilos = {
-    container: {
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
-      background: "black",
-      fontFamily: "sans-serif",
-    },
-    content: {
-      flex: 1,
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    card: {
-      background: "linear-gradient(145deg, #1e1e1e, #2c2c2c)",
-      padding: "2rem",
-      borderRadius: "1rem",
-      boxShadow: "0 0 20px rgba(255, 0, 0, 0.5)",
-      width: "400px",
-      textAlign: "center",
-      color: "white",
-    },
-    titulo: {
-      fontSize: "2rem",
-      color: "red",
-      marginBottom: "1.5rem",
-    },
-    input: {
-      width: "80px",
-      padding: "0.5rem",
-      fontSize: "1.2rem",
-      textAlign: "center",
-      borderRadius: "0.5rem",
-      border: "none",
-      outline: "none",
-      marginLeft: "0.5rem",
-    },
-    boton: {
-      marginTop: "1.5rem",
-      padding: "1rem",
-      fontSize: "1.2rem",
-      background: "red",
-      color: "white",
-      border: "none",
-      borderRadius: "0.5rem",
-      cursor: "pointer",
-      transition: "background 0.3s ease",
-    },
-    turnoActual: {
-      marginTop: "2rem",
-      fontSize: "1.8rem",
-    },
-    mensaje: {
-      marginTop: "2rem",
-      fontSize: "1.2rem",
-      color: "gray",
-    }
-  };
-
   return (
-    <div style={estilos.container}>
-      {/* 🔹 Barra de navegación */}
+    <div className="panel-cajero-container">
+      {/* Barra de navegación */}
       <Navbar />
 
-      {/* Contenido principal centrado */}
-      <div style={estilos.content}></div>
-      <div style={estilos.card}>
-        <h2 style={estilos.titulo}>Panel del Cajero</h2>
+      {/* Contenido principal */}
+      <div className="panel-cajero-content">
+        <div className="panel-cajero-card">
+          <h2 className="panel-cajero-titulo">Panel del Cajero</h2>
 
-        <div>
-          <label>
-            Módulo:
-            <input
-              style={estilos.input}
-              type="number"
-              min="1"
-              max="10"
-              value={modulo}
-              onChange={(e) => setModulo(Number(e.target.value))}
-            />
-          </label>
+          <div>
+            <label>
+              Módulo:
+              <input
+                className="panel-cajero-input"
+                type="number"
+                min="1"
+                max="10"
+                value={modulo}
+                onChange={(e) => setModulo(Number(e.target.value))}
+              />
+            </label>
+          </div>
+
+          <button
+            className="panel-cajero-boton"
+            onClick={llamarSiguiente}
+          >
+            Llamar Siguiente Turno
+          </button>
+
+          {turno && turno.numero ? (
+            <p className="panel-cajero-turno">
+              Llamando al Turno: <strong>{turno.numero}</strong> (Módulo {turno.modulo})
+            </p>
+          ) : turno?.mensaje ? (
+            <p className="panel-cajero-mensaje">No hay turnos disponibles.</p>
+          ) : (
+            <p className="panel-cajero-mensaje">Esperando turno...</p>
+          )}
         </div>
-
-        <button
-          style={estilos.boton}
-          onMouseOver={(e) => e.target.style.background = "#b30000"}
-          onMouseOut={(e) => e.target.style.background = "red"}
-          onClick={llamarSiguiente}
-        >
-          Llamar Siguiente Turno
-        </button>
-
-        {turno && turno.numero ? (
-          <p style={estilos.turnoActual}>
-            Llamando al Turno: <strong>{turno.numero}</strong> (Módulo {turno.modulo})
-          </p>
-        ) : turno?.mensaje ? (
-          <p style={estilos.mensaje}>No hay turnos disponibles.</p>
-        ) : (
-          <p style={estilos.mensaje}>Esperando turno...</p>
-        )}
       </div>
     </div>
   );
