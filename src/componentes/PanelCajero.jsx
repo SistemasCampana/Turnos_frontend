@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Navbar from "./Navbar";
 
 const PanelCajero = () => {
   const [turno, setTurno] = useState(null);
@@ -21,10 +22,15 @@ const PanelCajero = () => {
     container: {
       height: "100vh",
       display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+      flexDirection: "column",
       background: "black",
       fontFamily: "sans-serif",
+    },
+    content: {
+      flex: 1,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
     },
     card: {
       background: "linear-gradient(145deg, #1e1e1e, #2c2c2c)",
@@ -74,6 +80,11 @@ const PanelCajero = () => {
 
   return (
     <div style={estilos.container}>
+      {/* 🔹 Barra de navegación */}
+      <Navbar />
+
+      {/* Contenido principal centrado */}
+      <div style={estilos.content}></div>
       <div style={estilos.card}>
         <h2 style={estilos.titulo}>Panel del Cajero</h2>
 
