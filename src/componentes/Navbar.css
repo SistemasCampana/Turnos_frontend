@@ -1,0 +1,36 @@
+.navbar {
+  background: #1a1a1a;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  border-bottom: 2px solid red;
+}
+
+.navButton {
+  padding: 0.5rem 1rem;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.navButton:hover {
+  background: #b30000;
+}
+
+.btnReiniciar {
+  padding: 0.5rem 1rem;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnReiniciar:hover {
+  background: #c82333;
+}

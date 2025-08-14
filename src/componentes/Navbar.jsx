@@ -1,47 +1,47 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const estilos = {
-    nav: {
-      background: "#1a1a1a",
-      padding: "1rem",
-      display: "flex",
-      justifyContent: "center",
-      gap: "1rem",
-      borderBottom: "2px solid red",
-    },
-    navButton: {
-      padding: "0.5rem 1rem",
-      background: "red",
-      color: "white",
-      border: "none",
-      borderRadius: "0.5rem",
-      cursor: "pointer",
-    },
+  const reiniciarTurnos = async () => {
+    if (!window.confirm("⚠️ ¿Seguro que quieres reiniciar todos los turnos?")) return;
+
+    try {
+      const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/reiniciar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (!res.ok) {
+        const txt = await res.text();
+        alert("Error al reiniciar turnos: " + txt);
+        return;
+      }
+
+      alert("✅ Turnos reiniciados correctamente");
+    } catch (err) {
+      console.error("Error reiniciando turnos:", err);
+      alert("Error de conexión con el servidor");
+    }
   };
 
   return (
-    <nav style={estilos.nav}>
-      <button
-        style={estilos.navButton}
-        onClick={() => navigate("/turno")}
-      >
+    <nav className="navbar">
+      <button className="navButton" onClick={() => navigate("/turno")}>
         Solicitar Turno
       </button>
-      <button
-        style={estilos.navButton}
-        onClick={() => navigate("/pantalla")}
-      >
+      <button className="navButton" onClick={() => navigate("/pantalla")}>
         Ver Pantalla
       </button>
-      <button
-        style={estilos.navButton}
-        onClick={() => navigate("/panel")}
-      >
+      <button className="navButton" onClick={() => navigate("/panel")}>
         Panel Cajero
+      </button>
+      <button className="btnReiniciar" onClick={reiniciarTurnos}>
+        🔄 Reiniciar Turnos
       </button>
     </nav>
   );
