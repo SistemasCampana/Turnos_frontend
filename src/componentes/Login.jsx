@@ -16,7 +16,15 @@ export default function Login({ onLogin }) {
       });
       localStorage.setItem("token", res.data.access_token);
       onLogin();
-    } catch (err) {
+    } catch (error) {
+      if (error.response) {
+        console.error("📡 Respuesta del servidor:", error.response.data);
+        console.error("📋 Código de estado:", error.response.status);
+      } else if (error.request) {
+        console.error("⏳ No hubo respuesta del servidor:", error.request);
+      } else {
+        console.error("⚠️ Error configurando la petición:", error.message);
+      }
       alert("Usuario o contraseña incorrectos");
     }
   };
