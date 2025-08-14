@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Login.css";
 import axios from "axios";
 
 export default function Login({ onLogin }) {
@@ -40,23 +39,19 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="login-container">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Iniciar Sesión</h2>
-        <input
-          type="text"
-          placeholder="Usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
-        />
-        <button type="submit">Ingresar</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Usuario"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Contraseña"
+      />
+      <button type="submit">Ingresar</button>
+    </form>
   );
 }
