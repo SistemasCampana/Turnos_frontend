@@ -9,13 +9,22 @@ export default function Login({ onLogin }) {
     e.preventDefault();
     console.log("Usuario enviado:", username);
     console.log("Contraseña enviada:", password);
+
     try {
-      const res = await axios.post("https://turnos-backend-b0jc.onrender.com/api/login", {
-        username,
-        password
-      });
+      const res = await axios.post(
+        "https://turnos-backend-b0jc.onrender.com/api/login",
+        { username, password }
+      );
+
+      // Guardar token
       localStorage.setItem("token", res.data.access_token);
-      onLogin();
+
+      // Llamar a la función del padre si existe
+      if (typeof onLogin === "function") {
+        onLogin();
+      } else {
+        console.warn("⚠️ No se pasó la función onLogin como prop.");
+      }
     } catch (error) {
       if (error.response) {
         console.error("📡 Respuesta del servidor:", error.response.data);
@@ -31,8 +40,17 @@ export default function Login({ onLogin }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Usuario" />
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Usuario"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Contraseña"
+      />
       <button type="submit">Ingresar</button>
     </form>
   );
