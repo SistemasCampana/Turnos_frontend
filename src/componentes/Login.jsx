@@ -7,6 +7,8 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Usuario enviado:", username);
+    console.log("Contraseña enviada:", password);
     try {
       const res = await axios.post("https://turnos-backend-b0jc.onrender.com/api/login", {
         username,
