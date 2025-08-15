@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import Navbar from "./Navbar"; // Importamos el navbar
-import "./MostrarTurno.css";  // Importamos los estilos externos
+import Navbar from "./Navbar";
+import "./MostrarTurno.css";
 
 const MostrarTurno = () => {
   const [turnoActual, setTurnoActual] = useState(null);
@@ -23,16 +23,14 @@ const MostrarTurno = () => {
     try {
       const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/ultimo");
 
-      // Validación: si la respuesta no es OK, leer como texto y salir
       if (!res.ok) {
         const txt = await res.text();
         console.error("❌ /ultimo falló:", res.status, txt);
-        return; // No seguimos, porque no hay JSON válido
+        return;
       }
 
       const data = await res.json();
 
-      // Validación extra: asegurarnos que es un objeto con id
       if (data && data.id && data.id !== ultimoIdRef.current) {
         ultimoIdRef.current = data.id;
         if (audioRef.current) audioRef.current.play();

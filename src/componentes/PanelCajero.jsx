@@ -15,7 +15,7 @@ const PanelCajero = () => {
     });
 
     if (!res.ok) {
-      const txt = await res.text(); // leer como texto para evitar error al parsear HTML
+      const txt = await res.text();
       console.error("❌ /siguiente falló:", res.status, txt);
       alert(`Error del servidor (${res.status}): ${txt}`);
       return;
