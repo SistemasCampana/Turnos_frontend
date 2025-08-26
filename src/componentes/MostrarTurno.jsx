@@ -66,11 +66,18 @@ const MostrarTurno = () => {
         </button>
       ) : (
         <>
+          {/* POPUP ANIMADO */}
           <div className={`overlay ${mostrarAnimacion ? "activo" : ""}`}>
             {mostrarAnimacion && turnoActual && (
               <div className="popup">
                 <div>
                   Turno <strong>{turnoActual.numero}</strong>
+                </div>
+                <div>
+                  Cliente: <strong>{turnoActual.nombre_cliente}</strong>
+                </div>
+                <div>
+                  Bodega: <strong>{turnoActual.bodega}</strong>
                 </div>
                 <div>
                   Módulo <strong>{turnoActual.modulo}</strong>
@@ -79,6 +86,7 @@ const MostrarTurno = () => {
             )}
           </div>
 
+          {/* TABLA DE HISTORIAL */}
           <div className="tabla-container">
             <div className="tabla">
               <h2 className="tabla-titulo">TURNOS</h2>
@@ -86,6 +94,8 @@ const MostrarTurno = () => {
                 <thead>
                   <tr>
                     <th>Turno</th>
+                    <th>Cliente</th>
+                    <th>Bodega</th>
                     <th>Módulo</th>
                   </tr>
                 </thead>
@@ -93,6 +103,8 @@ const MostrarTurno = () => {
                   {historial.map((t, idx) => (
                     <tr key={idx}>
                       <td>{t.numero}</td>
+                      <td>{t.nombre_cliente}</td>
+                      <td>{t.bodega}</td>
                       <td>{t.modulo}</td>
                     </tr>
                   ))}
