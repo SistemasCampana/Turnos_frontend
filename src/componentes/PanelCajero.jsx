@@ -1,76 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Navbar from "./Navbar";
 import "./PanelCajero.css";
 
 const PanelCajero = () => {
-  const [turno, setTurno] = useState(null);
-  const [modulo, setModulo] = useState(1);
+  const [clientes, setClientes] = useState([]);
+  const [clienteId, setClienteId] = useState("");
+  const [bodega, setBodega] = useState("");
 
-  const llamarSiguiente = async () => {
-  try {
-    const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/siguiente", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ modulo })
-    });
+  useEffect(() => {
+    const fetchClientes = async () => {
+      try {
+        const res = await axios.get("http://127.0.0.1:5000/clientes");
+        setClientes(res.data);
+      } catch (error) {
+        console.error("Error cargando clientes:", error);
+      }
+    };
+    fetchClientes();
+  }, []);
 
-    if (!res.ok) {
-      const txt = await res.text();
-      console.error("❌ /siguiente falló:", res.status, txt);
-      alert(`Error del servidor (${res.status}): ${txt}`);
+  const asignarTurno = async () => {
+    if (!clienteId || !bodega) {
+      alert("Selecciona un cliente y escribe una bodega");
       return;
     }
-
-    const data = await res.json();
-    setTurno(data);
-
-  } catch (err) {
-    console.error("⚠️ Error de red al llamar siguiente:", err);
-    alert("No se pudo conectar al servidor. Intenta de nuevo.");
-  }
-};
+    try {
+      await axios.post("https://turnos-backend-b0jc.onrender.com/turnos", {
+        cliente_id: clienteId,
+        bodega: bodega,
+      });
+      alert("Turno asignado ✅");
+      setClienteId("");
+      setBodega("");
+    } catch (error) {
+      console.error(error);
+      alert("Error al asignar turno");
+    }
+  };
 
   return (
     <div className="panel-cajero-container">
-      {/* Barra de navegación */}
       <Navbar />
+      <div className="panel-cajero-card">
+        <h2>Panel del Cajero</h2>
 
-      {/* Contenido principal */}
-      <div className="panel-cajero-content">
-        <div className="panel-cajero-card">
-          <h2 className="panel-cajero-titulo">Panel del Cajero</h2>
-
-          <div>
-            <label>
-              Módulo:
-              <input
-                className="panel-cajero-input"
-                type="number"
-                min="1"
-                max="10"
-                value={modulo}
-                onChange={(e) => setModulo(Number(e.target.value))}
-              />
-            </label>
-          </div>
-
-          <button
-            className="panel-cajero-boton"
-            onClick={llamarSiguiente}
+        {/* Select de clientes */}
+        <label>
+          Selecciona Cliente:
+          <select
+            value={clienteId}
+            onChange={(e) => setClienteId(e.target.value)}
+            className="panel-cajero-input"
           >
-            Llamar Siguiente Turno
-          </button>
+            <option value="">-- Selecciona --</option>
+            {clientes.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.nombre}
+              </option>
+            ))}
+          </select>
+        </label>
 
-          {turno && turno.numero ? (
-            <p className="panel-cajero-turno">
-              Llamando al Turno: <strong>{turno.numero}</strong> (Módulo {turno.modulo})
-            </p>
-          ) : turno?.mensaje ? (
-            <p className="panel-cajero-mensaje">No hay turnos disponibles.</p>
-          ) : (
-            <p className="panel-cajero-mensaje">Esperando turno...</p>
-          )}
-        </div>
+        {/* Input bodega */}
+        <label>
+          Bodega:
+          <input
+            type="text"
+            value={bodega}
+            onChange={(e) => setBodega(e.target.value)}
+            className="panel-cajero-input"
+          />
+        </label>
+
+        {/* Botón */}
+        <button onClick={asignarTurno} className="panel-cajero-boton">
+          Asignar Turno
+        </button>
       </div>
     </div>
   );
