@@ -12,7 +12,7 @@ export default function PanelCajero() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://turnos-backend-b0jc.onrender.com/turnos/", {
+      const res = await axios.post("https://turnos-backend-b0jc.onrender.com/api/turnos/", {
         nombre_cliente: nombreCliente,
         bodega: bodega,
       });
