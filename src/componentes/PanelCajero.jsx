@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 
 export default function PanelCajero() {
-  const [nombreCliente, setNombreCliente] = useState("");
+  const [nombre_cliente, setNombreCliente] = useState("");
   const [bodega, setBodega] = useState("");
   const [mensaje, setMensaje] = useState("");
 
@@ -13,7 +13,7 @@ export default function PanelCajero() {
 
     try {
       const res = await axios.post("https://turnos-backend-b0jc.onrender.com/api/turnos/", {
-        nombre_cliente: nombreCliente,
+        nombre_cliente: nombre_cliente,
         bodega: bodega,
       });
 
@@ -37,7 +37,7 @@ export default function PanelCajero() {
           <label className="block text-gray-700">Nombre del Cliente:</label>
           <input
             type="text"
-            value={nombreCliente}
+            value={nombre_cliente}
             onChange={(e) => setNombreCliente(e.target.value)}
             required
             className="w-full border px-3 py-2 rounded-lg"
