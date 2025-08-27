@@ -31,13 +31,19 @@ const MostrarTurno = () => {
 
       const data = await res.json();
 
+      // 🔥 Verificamos si hay turno nuevo
       if (data && data.id && data.id !== ultimoIdRef.current) {
         ultimoIdRef.current = data.id;
+
+        // 🔊 Sonido
         if (audioRef.current) audioRef.current.play();
+
+        // 📌 Guardar turno
         setTurnoActual(data);
         setHistorial((prev) => [data, ...prev].slice(0, 5));
-        setMostrarAnimacion(true);
 
+        // 🎬 Animación
+        setMostrarAnimacion(true);
         setTimeout(() => setMostrarAnimacion(false), 4000);
       }
 
@@ -71,10 +77,10 @@ const MostrarTurno = () => {
             {mostrarAnimacion && turnoActual && (
               <div className="popup">
                 <div>
-                  Cliente: <strong>{turnoActual.nombre_cliente}</strong>
+                  Cliente: <strong>{turnoActual.nombre_cliente || "—"}</strong>
                 </div>
                 <div>
-                  Bodega: <strong>{turnoActual.bodega}</strong>
+                  Bodega: <strong>{turnoActual.bodega || "—"}</strong>
                 </div>
               </div>
             )}
@@ -94,8 +100,8 @@ const MostrarTurno = () => {
                 <tbody>
                   {historial.map((t, idx) => (
                     <tr key={idx}>
-                      <td>{t.nombre_cliente}</td>
-                      <td>{t.bodega}</td>
+                      <td>{t.nombre_cliente || "—"}</td>
+                      <td>{t.bodega || "—"}</td>
                     </tr>
                   ))}
                 </tbody>
