@@ -71,16 +71,10 @@ const MostrarTurno = () => {
             {mostrarAnimacion && turnoActual && (
               <div className="popup">
                 <div>
-                  Turno <strong>{turnoActual.numero}</strong>
-                </div>
-                <div>
                   Cliente: <strong>{turnoActual.nombre_cliente}</strong>
                 </div>
                 <div>
                   Bodega: <strong>{turnoActual.bodega}</strong>
-                </div>
-                <div>
-                  Módulo <strong>{turnoActual.modulo}</strong>
                 </div>
               </div>
             )}
@@ -93,19 +87,15 @@ const MostrarTurno = () => {
               <table className="tabla-style">
                 <thead>
                   <tr>
-                    <th>Turno</th>
                     <th>Cliente</th>
                     <th>Bodega</th>
-                    <th>Módulo</th>
                   </tr>
                 </thead>
                 <tbody>
                   {historial.map((t, idx) => (
                     <tr key={idx}>
-                      <td>{t.numero}</td>
                       <td>{t.nombre_cliente}</td>
                       <td>{t.bodega}</td>
-                      <td>{t.modulo}</td>
                     </tr>
                   ))}
                 </tbody>
