@@ -1,5 +1,6 @@
 // src/componentes/PanelCajero.jsx
 import React, { useState } from "react";
+import Navbar from "./Navbar";
 import axios from "axios";
 
 export default function PanelCajero() {
@@ -27,6 +28,8 @@ export default function PanelCajero() {
 
   return (
     <div className="p-6 max-w-md mx-auto bg-white shadow-lg rounded-xl">
+      <Navbar />
+
       <h2 className="text-xl font-bold mb-4">Panel del Cajero</h2>
 
       <form onSubmit={llamarTurno} className="space-y-4">
