@@ -70,8 +70,8 @@
 }
 
 .tabla-titulo {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 4rem;
+  margin-bottom: 2rem;
   color: red;
   text-align: center;
 }
@@ -79,14 +79,20 @@
 .tabla-style {
   width: 100%;
   border-collapse: collapse;
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .tabla-style th,
 .tabla-style td {
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid white;
+  padding: 1.2rem 2rem;
+  border-bottom: 2px solid white;
   text-align: center;
+}
+
+.tabla-style th {
+  font-size: 2.8rem;       /* encabezados más grandes */
+  color: red;
+  font-weight: bold;
 }
 
 .logo {
