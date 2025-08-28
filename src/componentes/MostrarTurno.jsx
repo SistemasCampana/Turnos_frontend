@@ -40,7 +40,7 @@ const MostrarTurno = () => {
 
         // 📌 Guardar turno
         setTurnoActual(data);
-        setHistorial((prev) => [data, ...prev].slice(0, 5));
+        setHistorial((prev) => [data, ...prev].slice(0, 7));
 
         // 🎬 Animación
         setMostrarAnimacion(true);
