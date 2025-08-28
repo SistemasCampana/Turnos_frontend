@@ -31,9 +31,9 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <button className="navButton" onClick={() => navigate("/turno")}>
+      {/* <button className="navButton" onClick={() => navigate("/turno")}>
         Solicitar Turno
-      </button>
+      </button> */}
       <button className="navButton" onClick={() => navigate("/pantalla")}>
         Ver Pantalla
       </button>
