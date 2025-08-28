@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
+import "./PanelCajero.css";   // 👈 importa el CSS personalizado
 
 export default function PanelCajero() {
   const [nombre_cliente, setNombreCliente] = useState("");
@@ -24,7 +25,7 @@ export default function PanelCajero() {
       console.error("Error al llamar turno:", error);
 
       if (error.response && error.response.data && error.response.data.error) {
-        setMensaje("Error: " + error.response.data.error);   // 👈 muestra el error real del backend
+        setMensaje("Error: " + error.response.data.error);
       } else {
         setMensaje("Error al registrar turno");
       }
@@ -32,48 +33,46 @@ export default function PanelCajero() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto bg-white shadow-lg rounded-xl">
+    <div className="panel-cajero-container">
       <Navbar />
 
-      <h2 className="text-xl font-bold mb-4">Panel del Cajero</h2>
+      <div className="panel-cajero-content">
+        <div className="panel-cajero-card">
+          <h2 className="panel-cajero-titulo">🎟️ Panel del Cajero</h2>
 
-      <form onSubmit={llamarTurno} className="space-y-4">
-        <div>
-          <label className="block text-gray-700">Nombre del Cliente:</label>
-          <input
-            type="text"
-            value={nombre_cliente}
-            onChange={(e) => setNombreCliente(e.target.value)}
-            required
-            className="w-full border px-3 py-2 rounded-lg"
-          />
+          <form onSubmit={llamarTurno} className="space-y-4">
+            <div>
+              <label className="block mb-2">Nombre del Cliente:</label>
+              <input
+                type="text"
+                value={nombre_cliente}
+                onChange={(e) => setNombreCliente(e.target.value)}
+                required
+                className="w-full px-3 py-2 rounded-md bg-gray-900 text-white border border-gray-600 focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2">Bodega:</label>
+              <input
+                type="text"
+                value={bodega}
+                onChange={(e) => setBodega(e.target.value)}
+                required
+                className="w-full px-3 py-2 rounded-md bg-gray-900 text-white border border-gray-600 focus:ring-2 focus:ring-red-500"
+              />
+            </div>
+
+            <button type="submit" className="panel-cajero-boton w-full">
+              🚀 Llamar Turno
+            </button>
+          </form>
+
+          {mensaje && (
+            <div className="panel-cajero-mensaje">{mensaje}</div>
+          )}
         </div>
-
-        <div>
-          <label className="block text-gray-700">Bodega:</label>
-          <input
-            type="text"
-            value={bodega}
-            onChange={(e) => setBodega(e.target.value)}
-            required
-            className="w-full border px-3 py-2 rounded-lg"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-        >
-          Llamar Turno
-        </button>
-      </form>
-
-      {mensaje && (
-        <div className="mt-4 p-3 bg-green-100 text-green-700 rounded-lg">
-          {mensaje}
-        </div>
-      )}
+      </div>
     </div>
   );
 }
-
