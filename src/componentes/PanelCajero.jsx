@@ -22,7 +22,12 @@ export default function PanelCajero() {
       setBodega("");
     } catch (error) {
       console.error("Error al llamar turno:", error);
-      setMensaje("Error al registrar turno");
+
+      if (error.response && error.response.data && error.response.data.error) {
+        setMensaje("Error: " + error.response.data.error);   // 👈 muestra el error real del backend
+      } else {
+        setMensaje("Error al registrar turno");
+      }
     }
   };
 
