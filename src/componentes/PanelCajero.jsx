@@ -38,7 +38,7 @@ export default function PanelCajero() {
 
       <div className="panel-cajero-content">
         <div className="panel-cajero-card">
-          <h2 className="panel-cajero-titulo">🎟️ Panel del Cajero</h2>
+          <h2 className="panel-cajero-titulo">Panel del Cajero</h2>
 
           <form onSubmit={llamarTurno} className="space-y-4">
             <div>
@@ -64,7 +64,7 @@ export default function PanelCajero() {
             </div>
 
             <button type="submit" className="panel-cajero-boton w-full">
-              🚀 Llamar Turno
+              Llamar Turno
             </button>
           </form>
 
