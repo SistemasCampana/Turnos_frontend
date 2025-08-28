@@ -70,8 +70,9 @@
 }
 
 .tabla-titulo {
-  font-size: 4rem;
-  margin-bottom: 2rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
   color: red;
   text-align: center;
 }
