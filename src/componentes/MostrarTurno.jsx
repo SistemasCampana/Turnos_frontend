@@ -31,18 +31,16 @@ const MostrarTurno = () => {
 
       const data = await res.json();
 
-      // 🔥 Verificamos si hay turno nuevo
       if (data && data.id && data.id !== ultimoIdRef.current) {
         ultimoIdRef.current = data.id;
 
-        // 🔊 Sonido
+        // Sonido
         if (audioRef.current) audioRef.current.play();
 
-        // 📌 Guardar turno
         setTurnoActual(data);
         setHistorial((prev) => [data, ...prev].slice(0, 5));
 
-        // 🎬 Animación
+        // Animación
         setMostrarAnimacion(true);
         setTimeout(() => setMostrarAnimacion(false), 4000);
       }

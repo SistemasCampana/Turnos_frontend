@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
-import "./PanelCajero.css";   // 👈 importa el CSS personalizado
+import "./PanelCajero.css";
 
 export default function PanelCajero() {
   const [nombre_cliente, setNombreCliente] = useState("");
