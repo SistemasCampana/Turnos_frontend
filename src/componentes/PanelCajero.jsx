@@ -41,7 +41,8 @@ export default function PanelCajero() {
           <h2 className="panel-cajero-titulo">Panel del Cajero</h2>
 
           <form onSubmit={llamarTurno} className="space-y-4">
-            <div>
+            
+            <div className="mb-4">
               <label className="block mb-2">Nombre del Cliente:</label>
               <input
                 type="text"
@@ -52,7 +53,7 @@ export default function PanelCajero() {
               />
             </div>
 
-            <div>
+            <div className="mb-4">
               <label className="block mb-2">Bodega:</label>
               <input
                 type="text"
