@@ -25,12 +25,19 @@ const MostrarTurno = () => {
       contenedorRef.current.requestFullscreen().catch((err) => {
         console.error("Error al entrar en pantalla completa:", err);
       });
-      setPantallaCompleta(true);
     } else {
       document.exitFullscreen();
-      setPantallaCompleta(false);
     }
   };
+
+  // Detectar cambios en pantalla completa
+  useEffect(() => {
+    const manejarCambioPantalla = () => {
+      setPantallaCompleta(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", manejarCambioPantalla);
+    return () => document.removeEventListener("fullscreenchange", manejarCambioPantalla);
+  }, []);
 
   const fetchTurno = async () => {
     if (!audioHabilitado) return;
@@ -74,7 +81,8 @@ const MostrarTurno = () => {
 
   return (
     <div ref={contenedorRef} className="pantalla">
-      <Navbar />
+      {/* 👇 Ocultamos la Navbar cuando esté en pantalla completa */}
+      {!pantallaCompleta && <Navbar />}
 
       <audio ref={audioRef} src="/campana.wav" />
 
