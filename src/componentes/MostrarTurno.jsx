@@ -94,7 +94,7 @@ const MostrarTurno = () => {
         <>
           {/* 🔘 BOTÓN PANTALLA COMPLETA */}
           <button className="boton-pantalla" onClick={togglePantallaCompleta}>
-            {pantallaCompleta ? "Salir de Pantalla Completa" : "Pantalla Completa"}
+            {pantallaCompleta ? "⛶" : "⛶"}
           </button>
 
           {/* POPUP ANIMADO */}
