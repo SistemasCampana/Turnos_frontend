@@ -9,12 +9,27 @@ const MostrarTurno = () => {
   const ultimoIdRef = useRef(null);
   const [mostrarAnimacion, setMostrarAnimacion] = useState(false);
   const [audioHabilitado, setAudioHabilitado] = useState(false);
+  const [pantallaCompleta, setPantallaCompleta] = useState(false);
+  const contenedorRef = useRef(null);
 
   const habilitarAudio = () => {
     if (audioRef.current) {
       audioRef.current.play().catch(() => {});
     }
     setAudioHabilitado(true);
+  };
+
+  // 👉 Alternar pantalla completa
+  const togglePantallaCompleta = () => {
+    if (!document.fullscreenElement) {
+      contenedorRef.current.requestFullscreen().catch((err) => {
+        console.error("Error al entrar en pantalla completa:", err);
+      });
+      setPantallaCompleta(true);
+    } else {
+      document.exitFullscreen();
+      setPantallaCompleta(false);
+    }
   };
 
   const fetchTurno = async () => {
@@ -44,7 +59,6 @@ const MostrarTurno = () => {
         setMostrarAnimacion(true);
         setTimeout(() => setMostrarAnimacion(false), 4000);
       }
-
     } catch (error) {
       console.error("⚠️ Error obteniendo turno:", error);
     }
@@ -59,7 +73,7 @@ const MostrarTurno = () => {
   }, [audioHabilitado]);
 
   return (
-    <div className="pantalla">
+    <div ref={contenedorRef} className="pantalla">
       <Navbar />
 
       <audio ref={audioRef} src="/campana.wav" />
@@ -70,6 +84,11 @@ const MostrarTurno = () => {
         </button>
       ) : (
         <>
+          {/* 🔘 BOTÓN PANTALLA COMPLETA */}
+          <button className="boton-pantalla" onClick={togglePantallaCompleta}>
+            {pantallaCompleta ? "Salir de Pantalla Completa" : "Pantalla Completa"}
+          </button>
+
           {/* POPUP ANIMADO */}
           <div className={`overlay ${mostrarAnimacion ? "activo" : ""}`}>
             {mostrarAnimacion && turnoActual && (
