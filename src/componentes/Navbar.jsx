@@ -9,6 +9,7 @@ const Navbar = () => {
     if (!window.confirm("⚠️ ¿Seguro que quieres reiniciar todos los turnos?")) return;
 
     try {
+      // Nota: Tu URL de backend es 'https://turnos-backend-b0jc.onrender.com'
       const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/reiniciar", {
         method: "POST",
         headers: {
@@ -40,6 +41,12 @@ const Navbar = () => {
       <button className="navButton" onClick={() => navigate("/panel")}>
         Panel Cajero
       </button>
+
+      {/* 📊 NUEVO BOTÓN PARA GENERAR EL INFORME */}
+      <button className="navButton" onClick={() => navigate("/informe")}>
+        📊 Generar Informe
+      </button>
+      
       <button className="btnReiniciar" onClick={reiniciarTurnos}>
         🔄 Reiniciar Turnos
       </button>
