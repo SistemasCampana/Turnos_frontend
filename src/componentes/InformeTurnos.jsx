@@ -57,10 +57,10 @@ export default function InformeTurnos() {
     // Estructura de la Interfaz (JSX)
     // ----------------------------------------------------
     return (
-        // CONTENEDOR 1: Se aplica Flexbox y justificación central para centrar horizontalmente el hijo.
-        <div className="min-h-screen bg-gray-900 text-white flex justify-center w-full"> 
-            {/* CONTENEDOR 2: Solo necesita la limitación de ancho y padding. El centrado lo hace el padre. */}
-            <div className="p-4 sm:p-8 max-w-6xl w-full">
+        // CONTENEDOR 1: Solo definimos fondo y altura mínima. Eliminamos flex, justify-center e items-center.
+        <div className="min-h-screen bg-gray-900 text-white w-full"> 
+            {/* CONTENEDOR 2: Con 'mx-auto' y 'max-w-6xl' centramos el bloque automáticamente en el centro de la página. */}
+            <div className="p-4 sm:p-8 max-w-6xl w-full mx-auto">
                 <header className="mb-8 border-b border-indigo-700 pb-4">
                     <h1 className="text-3xl font-extrabold text-indigo-400 flex items-center">
                         {/* Icono de Gráfico de barras (lucide-react icon: bar-chart-3) */}
