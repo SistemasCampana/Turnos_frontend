@@ -9,7 +9,7 @@ const API_BASE_URL = 'https://turnos-backend-b0jc.onrender.com/api/turnos/';
 // Componente de la página de Informe
 // ----------------------------------------------------
 
-export default function Informe() {
+export default function InformeTurnos() {
     // Definición de estados
     const [fecha, setFecha] = useState(new Date().toISOString().split('T')[0]);
     const [informe, setInforme] = useState(null);
@@ -57,10 +57,10 @@ export default function Informe() {
     // Estructura de la Interfaz (JSX)
     // ----------------------------------------------------
     return (
-        // CONTENEDOR 1: Full-Width y Background. Ocupa el 100% del ancho del viewport.
-        <div className="min-h-screen bg-gray-900 text-white w-full"> 
-            {/* CONTENEDOR 2: Centrado y Max-Width. Aquí aplicamos el ancho máximo y el centrado. */}
-            <div className="p-4 sm:p-8 max-w-6xl mx-auto">
+        // CONTENEDOR 1: Se aplica Flexbox y justificación central para centrar horizontalmente el hijo.
+        <div className="min-h-screen bg-gray-900 text-white flex justify-center w-full"> 
+            {/* CONTENEDOR 2: Solo necesita la limitación de ancho y padding. El centrado lo hace el padre. */}
+            <div className="p-4 sm:p-8 max-w-6xl w-full">
                 <header className="mb-8 border-b border-indigo-700 pb-4">
                     <h1 className="text-3xl font-extrabold text-indigo-400 flex items-center">
                         {/* Icono de Gráfico de barras (lucide-react icon: bar-chart-3) */}
