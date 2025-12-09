@@ -34,7 +34,7 @@ export default function InformeTurnos() {
 
   return (
     <div className="informe-main">
-      <Navbar />
+
       <div className="informe-container">
 
         <header className="informe-header">
