@@ -99,7 +99,7 @@ const InformeTurnos = () => {
                                     borderRadius: '4px',
                                     color: 'white'
                                 }}>
-                                    **Turno {turno.numero}** | Cliente: {turno.nombre_cliente} | Bodega: {turno.bodega} | Estado: {turno.estado}
+                                    **Turno {turno.numero}** (Generado: {turno.hora_generacion || 'N/A'}) | Cliente: {turno.nombre_cliente} | Bodega: {turno.bodega} | Estado: {turno.estado}
                                 </li>
                             ))}
                         </ul>
