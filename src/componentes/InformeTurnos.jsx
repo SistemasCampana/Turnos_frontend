@@ -57,10 +57,12 @@ export default function InformeTurnos() {
     // Estructura de la Interfaz (JSX)
     // ----------------------------------------------------
     return (
-        // CONTENEDOR 1: Solo definimos fondo y altura mínima. Eliminamos flex, justify-center e items-center.
-        <div className="min-h-screen bg-gray-900 text-white w-full"> 
-            {/* CONTENEDOR 2: Con 'mx-auto' y 'max-w-6xl' centramos el bloque automáticamente en el centro de la página. */}
-            <div className="p-4 sm:p-8 max-w-6xl w-full mx-auto">
+        // CONTENEDOR 1: Utilizamos 'flex justify-center' para forzar el centrado horizontal.
+        // Eliminamos 'min-h-screen' para evitar conflictos de altura en el Canvas.
+        <div className="bg-gray-900 text-white w-full flex justify-center"> 
+            {/* CONTENEDOR 2: Se usa 'max-w-6xl' para limitar el ancho y 'w-full' para ocupar el espacio central. 
+            Hemos quitado 'mx-auto' ya que 'justify-center' en el padre lo reemplaza. */}
+            <div className="p-4 sm:p-8 max-w-6xl w-full">
                 <header className="mb-8 border-b border-indigo-700 pb-4">
                     <h1 className="text-3xl font-extrabold text-indigo-400 flex items-center">
                         {/* Icono de Gráfico de barras (lucide-react icon: bar-chart-3) */}
