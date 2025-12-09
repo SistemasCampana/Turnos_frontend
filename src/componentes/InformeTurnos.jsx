@@ -145,7 +145,6 @@ const TurnosTable = ({ turnos }) => (
           <th>Generado</th>
           <th>Cliente</th>
           <th>Bodega</th>
-          <th>Módulo</th>
           <th>Estado</th>
         </tr>
       </thead>
@@ -156,7 +155,6 @@ const TurnosTable = ({ turnos }) => (
             <td>{t.hora_generacion}</td>
             <td>{t.nombre_cliente}</td>
             <td>{t.bodega}</td>
-            <td>{t.modulo}</td>
             <td>
               <span className={`estado ${t.estado}`}>{t.estado.toUpperCase()}</span>
             </td>
