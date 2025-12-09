@@ -48,63 +48,48 @@ const InformeTurnos = () => {
     };
 
     return (
-        <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-            <h2 style={{ color: 'white' }}>📊 Generar Informe de Turnos</h2>
+        <div className="p-5 max-w-4xl mx-auto space-y-6 bg-gray-900 min-h-screen">
+            <h2 className="text-3xl font-extrabold text-white text-center mb-6">📊 Generar Informe de Turnos</h2>
             
-            <div style={{ marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <label htmlFor="fecha-informe" style={{ color: 'white' }}>Selecciona la Fecha:</label>
+            <div className="bg-gray-800 p-4 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-center gap-4 border border-gray-700">
+                <label htmlFor="fecha-informe" className="text-white font-medium whitespace-nowrap">Selecciona la Fecha:</label>
                 <input
                     type="date"
                     id="fecha-informe"
                     value={fecha}
                     onChange={(e) => setFecha(e.target.value)}
-                    style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                    className="p-2.5 rounded-lg border border-gray-600 bg-gray-700 text-white focus:ring-blue-500 focus:border-blue-500 w-full sm:w-auto"
                 />
                 <button
                     onClick={handleGenerarInforme}
                     disabled={cargando}
-                    style={{
-                        padding: '10px 15px',
-                        backgroundColor: '#1E90FF', // Un azul para diferenciar del rojo
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: cargando ? 'not-allowed' : 'pointer'
-                    }}
+                    className={` ${cargando ? 'bg-gray-500 cursor-not-allowed text-gray-400' : 'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/50'} w-full sm:w-auto px-6 py-2.5 rounded-lg font-semibold transition duration-200 `}
                 >
                     {cargando ? 'Cargando...' : 'Generar Informe'}
                 </button>
             </div>
 
-            {error && <p style={{ color: '#FF4500', fontWeight: 'bold' }}>Error: {error}</p>}
+            {error && <p className="text-red-500 font-bold text-center mt-4 p-2 bg-red-900/30 rounded-lg border border-red-500">Error: {error}</p>}
             
             {informe && (
-                <div style={{ backgroundColor: '#2e2e2e', padding: '15px', borderRadius: '8px', border: '1px solid #444' }}>
-                    <h3 style={{ color: '#00FA9A' }}>✅ Informe del Día: {informe.fecha}</h3>
-                    <p style={{ color: 'white', fontSize: '1.2em', fontWeight: 'bold' }}>
-                        Total de Turnos Generados: {informe.total_turnos}
-                    </p>
+                <div className="bg-gray-800 p-6 rounded-xl shadow-xl border border-green-500/50">
+                    <h3 className="text-2xl font-bold text-green-400 mb-4 text-center">✅ Informe del Día: {informe.fecha}</h3>
+                    <p className="text-white text-lg font-semibold text-center mb-4 p-3 bg-gray-700 rounded-lg"> Total de Turnos Generados: <span className="text-green-400">{informe.total_turnos}</span> </p>
                     
-                    <hr style={{ borderColor: '#444' }} />
+                    <hr className="border-gray-600 my-4" />
                     
-                    <h4 style={{ color: 'white' }}>Detalle de Turnos ({informe.total_turnos}):</h4>
+                    <h4 className="text-xl font-semibold text-white mb-3">Detalle de Turnos ({informe.detalle_turnos.length}):</h4>
                     
                     {informe.detalle_turnos.length > 0 ? (
-                        <ul style={{ listStyleType: 'none', padding: 0 }}>
+                        <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
                             {informe.detalle_turnos.map((turno) => (
-                                <li key={turno.id} style={{ 
-                                    backgroundColor: '#3a3a3a', 
-                                    padding: '10px', 
-                                    margin: '5px 0', 
-                                    borderRadius: '4px',
-                                    color: 'white'
-                                }}>
+                                <li key={turno.id} className="bg-gray-700 p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center shadow-inner">
                                     **Turno {turno.numero}** (Generado: {turno.hora_generacion || 'N/A'}) | Cliente: {turno.nombre_cliente} | Bodega: {turno.bodega} | Estado: {turno.estado}
                                 </li>
                             ))}
-                        </ul>
+                        </div>
                     ) : (
-                        <p style={{ color: '#ffdd57' }}>No se encontraron turnos para la fecha seleccionada.</p>
+                        <p className="text-yellow-400 text-center p-3 bg-gray-700 rounded-lg">No se encontraron turnos para la fecha seleccionada.</p>
                     )}
                 </div>
             )}
