@@ -1,0 +1,220 @@
+/* 🎨 ESTILOS GENERALES */
+.informe-main {
+  background: #111827;
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.informe-container {
+  width: 100%;
+  max-width: 1080px;
+  padding: 20px;
+}
+
+/* 🎯 HEADER */
+.informe-header {
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #4f46e5;
+  margin-bottom: 35px;
+}
+
+.informe-title {
+  font-size: 35px;
+  font-weight: 900;
+  color: #818cf8;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* 🗂 PANEL CONSULTA */
+.panel-consulta {
+  background: #1f2937;
+  padding: 30px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+}
+
+.consulta-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  align-items: center;
+}
+
+.label-fecha {
+  font-size: 18px;
+  color: #d1d5db;
+}
+
+.input-fecha {
+  background: #374151;
+  border: 1px solid #4b5563;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+}
+
+.input-fecha:focus {
+  border-color: #6366f1;
+}
+
+/* 🔘 BOTONES */
+.btn-generar {
+  padding: 10px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn-on {
+  background: #4f46e5;
+  color: white;
+}
+
+.btn-on:hover {
+  background: #4338ca;
+}
+
+.btn-off {
+  background: #6b7280;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* ⚠ ERROR */
+.error-box {
+  background: rgba(185, 28, 28, 0.3);
+  border: 1px solid #7f1d1d;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 📊 PANEL INFORME */
+.panel-informe {
+  background: #1f2937;
+  padding: 35px;
+  border-radius: 16px;
+}
+
+.informe-subtitle {
+  font-size: 28px;
+  color: #818cf8;
+  font-weight: bold;
+  border-bottom: 1px solid #374151;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+/* 🃏 CARDS */
+.cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+.card-box {
+  padding: 22px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #374151;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  color: #9ca3af;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.card-value {
+  font-size: 32px;
+  font-weight: 900;
+  margin-top: 4px;
+}
+
+/* 🟦 Colores tarjeta */
+.card-indigo {
+  background: rgba(79, 70, 229, 0.2);
+}
+
+.card-green {
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.card-icon {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 50%;
+}
+
+/* 🧾 TABLA */
+.tabla-wrapper {
+  overflow-x: auto;
+  border: 1px solid #374151;
+  border-radius: 12px;
+}
+
+.tabla-turnos {
+  width: 100%;
+  background: #1f2937;
+  border-collapse: collapse;
+}
+
+.tabla-turnos th {
+  background: #374151;
+  padding: 12px;
+  text-align: left;
+  font-size: 12px;
+  color: #d1d5db;
+  text-transform: uppercase;
+}
+
+.tabla-turnos td {
+  padding: 14px;
+  color: #e5e7eb;
+  border-bottom: 1px solid #374151;
+}
+
+.turno-numero {
+  color: #818cf8;
+  font-weight: bold;
+}
+
+/* ESTADOS */
+.estado {
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.estado.llamado {
+  background: #065f46;
+  color: #d1fae5;
+}
+
+.estado.esperando {
+  background: #92400e;
+  color: #fef3c7;
+}
+
+.estado.otro {
+  background: #4b5563;
+  color: #e5e7eb;
+}
