@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 // Asegúrate de que esta URL base sea la correcta para tu Backend de Flask
-const API_URL = 'http://localhost:5000/api/turnos'; 
+const API_URL = 'https://turnos-backend-b0jc.onrender.com/api/turnos'; 
 
 const InformeTurnos = () => {
     const [fecha, setFecha] = useState('');
