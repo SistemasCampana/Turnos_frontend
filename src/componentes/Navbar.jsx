@@ -9,8 +9,8 @@ const Navbar = () => {
     if (!window.confirm("⚠️ ¿Seguro que quieres reiniciar todos los turnos?")) return;
 
     try {
-      // Nota: Tu URL de backend es 'https://turnos-backend-b0jc.onrender.com'
-      const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/reiniciar", {
+      // Nota: Tu URL de backend es 'https://turnos-backend-pcyf.onrender.com'
+      const res = await fetch("https://turnos-backend-pcyf.onrender.com/api/turnos/reiniciar", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
