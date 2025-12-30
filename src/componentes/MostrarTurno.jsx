@@ -43,7 +43,7 @@ const MostrarTurno = () => {
     if (!audioHabilitado) return;
 
     try {
-      const res = await fetch("https://turnos-backend-b0jc.onrender.com/api/turnos/ultimo");
+      const res = await fetch("https://turnos-backend-pcyf.onrender.com/api/turnos/ultimo");
 
       if (!res.ok) {
         const txt = await res.text();
