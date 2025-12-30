@@ -11,7 +11,7 @@ const PedirTurno = () => {
     if (!nombre) return alert("Por favor ingresa tu nombre");
 
     try {
-      await axios.post("https://turnos-backend-b0jc.onrender.com/clientes", { nombre });
+      await axios.post("https://turnos-backend-pcyf.onrender.com/clientes", { nombre });
       alert("Cliente registrado con éxito ✅");
       setNombre("");
     } catch (error) {
