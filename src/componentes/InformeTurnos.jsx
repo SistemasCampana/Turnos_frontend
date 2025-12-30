@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import "./InformeTurnos.css";
 
-const API_BASE_URL = "https://turnos-backend-b0jc.onrender.com/api/turnos/";
+const API_BASE_URL = "https://turnos-backend-pcyf.onrender.com/api/turnos/";
 
 export default function InformeTurnos() {
   const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
