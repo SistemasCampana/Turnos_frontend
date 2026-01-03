@@ -36,19 +36,19 @@ const Navbar = () => {
         Solicitar Turno
       </button> */}
       <button className="navButton" onClick={() => navigate("/pantalla")}>
-        👁️
+        Inicio 👁️
       </button>
       <button className="navButton" onClick={() => navigate("/panel")}>
-        ⌨︎
+        Panel ⌨︎
       </button>
 
       {/* 📊 NUEVO BOTÓN PARA GENERAR EL INFORME */}
       <button className="navButton" onClick={() => navigate("/informe")}>
-        📊
+        Informes 📊
       </button>
       
       <button className="btnReiniciar" onClick={reiniciarTurnos}>
-        🔄
+        Reiniciar Turnos 🔄
       </button>
     </nav>
   );
