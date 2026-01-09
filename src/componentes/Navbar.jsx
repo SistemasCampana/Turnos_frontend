@@ -20,6 +20,7 @@ const Navbar = () => {
   };
 
   return (
+
     <nav className="navbar-wrapper">
       <div className="navbar-recuadro">
         <div className="navbar-links">
@@ -52,6 +53,7 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+
     </nav>
   );
 };
