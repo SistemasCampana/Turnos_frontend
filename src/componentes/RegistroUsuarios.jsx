@@ -23,7 +23,7 @@ const RegistroUsuarios = () => {
         setMensaje({ texto: 'Registrando...', tipo: '' });
 
         try {
-            const response = await fetch('https://turnero-vx4j.onrender.com/api/usuarios/registro', {
+            const response = await fetch('https://turnos-backend-pcyf.onrender.com/api/usuarios/registro', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
