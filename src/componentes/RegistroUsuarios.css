@@ -1,0 +1,161 @@
+/* Contenedor principal: Centrado absoluto y fondo radial */
+.registro-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Tarjeta del formulario: Proporcional y con sombra suave */
+.registro-card {
+    background: #1a1a1a;
+    /* Fondo más oscuro para resaltar los inputs */
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 420px;
+    /* Ancho ideal para formularios móviles y desktop */
+    border: 1px solid #333;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    text-align: center;
+}
+
+/* Título: Negrita y espaciado corregido */
+.registro-titulo {
+    color: #ff0000;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.registro-subtitulo {
+    color: #777;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+/* Formulario: Espaciado interno consistente */
+.registro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.input-group {
+    text-align: left;
+}
+
+/* Labels: Más pequeños y elegantes */
+.input-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    color: #eee;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-left: 2px;
+}
+
+/* Inputs y Selects: Color de fondo similar a tus capturas */
+.registro-form input,
+.registro-form select {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: #e8f0fe;
+    /* Color claro para los inputs según tus imágenes */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    color: #333;
+    /* Texto oscuro para contraste en fondo claro */
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Estilo específico para el select */
+.registro-form select {
+    background-color: #111;
+    /* El select suele verse mejor oscuro o con este estilo */
+    color: white;
+    border: 1px solid #444;
+    cursor: pointer;
+}
+
+.registro-form input:focus {
+    border-color: #ff0000;
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
+/* Botón: Grande, centrado y con el rojo de la marca */
+.btn-registrar {
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background 0.3s, transform 0.2s;
+    letter-spacing: 1px;
+}
+
+.btn-registrar:hover {
+    background: #d10000;
+    transform: scale(1.02);
+}
+
+.btn-registrar:active {
+    transform: scale(0.98);
+}
+.btn-volver {
+    position: absolute;
+    /* Lo sacamos del flujo normal para que no mueva la tarjeta */
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    color: #888;
+    border: 1px solid #444;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.btn-volver:hover {
+    color: white;
+    border-color: red;
+    background: rgba(255, 0, 0, 0.1);
+}
+.btn-volver {
+    position: absolute;
+    top: 90px;
+    /* Ajustado para que aparezca debajo de la Navbar */
+    left: 20px;
+    background: #111;
+    color: #888;
+    border: 1px solid #444;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    color: white;
+    border-color: red;
+    background: rgba(255, 0, 0, 0.1);
+}

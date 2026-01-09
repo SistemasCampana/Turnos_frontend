@@ -4,9 +4,9 @@ import Login from './componentes/Login';
 import PedirTurno from './componentes/PedirTurno';
 import MostrarTurno from './componentes/MostrarTurno';
 import PanelCajero from './componentes/PanelCajero';
-// 📊 Importamos el nuevo componente de Informe
 import InformeTurnos from './componentes/InformeTurnos'; 
 import './App.css';
+import RegistroUsuarios from './componentes/RegistroUsuarios';
 
 function App() {
   return (
@@ -16,9 +16,11 @@ function App() {
         <Route path="/turno" element={<PedirTurno />} />
         <Route path="/pantalla" element={<MostrarTurno />} />
         <Route path="/panel" element={<PanelCajero />} />
-        
-        {/* 📊 NUEVA RUTA: Muestra el componente de informe */}
+        <Route path="/registro" element={<RegistroUsuarios />} />     
         <Route path="/informe" element={<InformeTurnos />} />
+        <Route path="/login" element={<LoginWrapper />} />       
+        <Route path="/registro" element={<RegistroUsuarios />} />
+        <Route path="/inicio" element={<MostrarTurno />} />
         
         <Route path="*" element={<div style={{ padding: '2rem' }}><h1>Ruta no encontrada</h1></div>} />
       </Routes>

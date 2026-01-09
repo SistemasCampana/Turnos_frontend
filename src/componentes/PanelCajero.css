@@ -1,77 +1,180 @@
-/* Contenedor general */
+/* 1. CONTENEDOR GENERAL */
 .panel-cajero-container {
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  background: black;
-  font-family: sans-serif;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
-/* Contenido centrado */
+/* 2. CONTENIDO CENTRADO CON RESPONSIVIDAD */
 .panel-cajero-content {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
 }
 
-/* Tarjeta */
+/* 3. TARJETA (Se adapta al ancho de pantalla) */
 .panel-cajero-card {
-  background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-  width: 400px;
+  background: #1e1e1e;
+  padding: clamp(2rem, 5vh, 4rem);
+  border-radius: 2rem;
+  box-shadow: 0 10px 50px rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  width: 100%;
+  max-width: 600px;
+  /* Más ancho para comodidad */
   text-align: center;
   color: white;
+  transition: all 0.3s ease;
 }
 
-/* Título */
+/* 4. TÍTULO DINÁMICO */
 .panel-cajero-titulo {
-  font-size: 2rem;
+  font-size: clamp(2rem, 4vh, 3rem);
   color: red;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 900;
 }
 
-/* Input de módulo */
+/* 5. FORMULARIO E INPUTS */
+.panel-cajero-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* Estilo para los labels */
+.panel-cajero-label {
+  font-size: 1.2rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
 .panel-cajero-input {
-  margin-bottom: 1rem;
-  width: 80px;
-  padding: 0.5rem;
-  font-size: 1.2rem;
+  width: 100%;
+  max-width: 300px;
+  padding: 1rem;
+  font-size: 1.5rem;
   text-align: center;
-  border-radius: 0.5rem;
-  border: none;
+  border-radius: 1rem;
+  border: 2px solid #333;
+  background: #111;
+  color: white;
   outline: none;
-  margin-left: 0.5rem;
+  transition: border-color 0.3s ease;
 }
 
-/* Botón */
+.panel-cajero-input:focus {
+  border-color: red;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+}
+
+/* 6. BOTÓN DE LLAMADO GIGANTE */
 .panel-cajero-boton {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  font-size: 1.2rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  font-size: clamp(1.2rem, 2vh, 1.8rem);
   background: red;
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .panel-cajero-boton:hover {
-  background: #b30000;
+  background: #ff1a1a;
+  transform: scale(1.02);
+  box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
 }
 
-/* Texto turno actual */
+.panel-cajero-boton:active {
+  transform: scale(0.98);
+}
+
+/* 7. ESTADO DEL TURNO ACTUAL */
 .panel-cajero-turno {
-  margin-top: 2rem;
-  font-size: 1.8rem;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  border-left: 5px solid red;
 }
 
-/* Mensaje */
-.panel-cajero-mensaje {
-  margin-top: 2rem;
-  font-size: 1.2rem;
+.panel-cajero-turno span {
+  display: block;
+  font-size: 1rem;
   color: gray;
+  text-transform: uppercase;
+}
+
+.panel-cajero-turno strong {
+  font-size: clamp(1.8rem, 4vh, 2.5rem);
+  color: white;
+}
+
+/* 8. MENSAJES DE SISTEMA */
+.panel-cajero-mensaje {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  font-weight: 500;
+  animation: fadeIn 0.4s ease;
+}
+
+.panel-cajero-mensaje.exito {
+  background: rgba(0, 255, 0, 0.15);
+  color: #2ecc71;
+  border: 1px solid #2ecc71;
+}
+
+.panel-cajero-mensaje.error {
+  background: rgba(255, 0, 0, 0.15);
+  color: #ff4d4d;
+  border: 1px solid #ff4d4d;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.contenedor-principal-unificado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Centra horizontalmente los hijos directos */
+  min-height: 100vh;
+  background: #000;
+  width: 100%;
+}
+
+/* El bloque que contiene el formulario o las tablas */
+.contenido-centrado {
+  width: 100%;
+  max-width: 1080px;
+  /* El ancho que usa tu sección de informes */
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }

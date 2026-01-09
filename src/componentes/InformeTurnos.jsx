@@ -34,9 +34,9 @@ export default function InformeTurnos() {
 
   return (
     <div className="informe-main">
-
+      
       <div className="informe-container">
-
+        <Navbar />
         <header className="informe-header">
           <h1 className="informe-title">
             <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2">

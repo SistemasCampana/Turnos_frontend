@@ -1,136 +1,441 @@
+/* 1. CONFIGURACIÓN GENERAL */
 .pantalla {
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   background: black;
   color: white;
   overflow: hidden;
   position: relative;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. VISTA INICIAL: BOTÓN DE AUDIO */
+.contenedor-inicio {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .boton-iniciar {
   background: red;
   color: white;
   border: none;
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
+  padding: 2vh 4vw;
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 8px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+  transition: transform 0.3s ease;
 }
 
-.overlay {
+/* 3. SELECCIÓN DE SEDES */
+.contenedor-sedes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.titulo-sedes {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: red;
+  margin-bottom: 5vh;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.grid-sedes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.tarjeta-sede {
+  background: transparent;
+  color: white;
+  border: 5px solid red;
+  padding: 5vh 2rem;
+  font-size: clamp(1.5rem, 2.5vw, 3.5rem);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+/* 4. CABECERA (PROPORCIONAL) */
+.controles-superiores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 8vh;
+  /* Altura fija relativa al alto de pantalla */
+  padding: 0 3vw;
+  background: rgba(255, 0, 0, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.nombre-sede {
+  font-size: clamp(1.5rem, 3vh, 2.5rem);
+}
+
+/* 5. DISTRIBUCIÓN PROPORCIONAL (TABLA E IMAGEN) */
+.tabla-container {
+  display: flex;
+  flex: 1;
+  /* Ocupa todo el resto de la pantalla */
+  width: 100%;
+  padding: 2vh 2vw;
+  box-sizing: border-box;
+  gap: 2vw;
+  align-items: stretch;
+  /* Estira los hijos para llenar el alto */
+}
+
+.tabla {
+  flex: 1.2;
+  /* Un poco más ancho que el logo */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tabla-style {
+  width: 100%;
+  height: 100%;
+  /* Obliga a la tabla a ocupar el alto del contenedor */
+  border-collapse: collapse;
+}
+
+.tabla-style th {
+  font-size: clamp(1.5rem, 4vh, 3rem);
+  color: red;
+  padding: 1vh;
+  border-bottom: 4px solid red;
+  text-transform: uppercase;
+}
+
+.tabla-style td {
+  font-size: clamp(2rem, 8vh, 6rem);
+  /* El texto crece según el ALTO de la pantalla */
+  padding: 1vh 2vw;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  font-weight: bold;
+}
+
+.celda-bodega {
+  color: red;
+  width: 40%;
+}
+
+/* CONTENEDOR DEL LOGO */
+.logo {
+  flex: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+}
+
+.logo-img {
+  max-width: 90%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+/* 6. POPUP RESPONSIVO */
+.popup {
+  background: white;
+  color: black;
+  width: 80vw;
+  max-width: 900px;
+  padding: 5vh;
+  border-radius: 40px;
+  text-align: center;
+  box-shadow: 0 0 100px red;
+}
+
+.popup-titulo {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  color: red;
+}
+
+.popup-nombre {
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 1;
+  margin: 2vh 0;
+}
+
+.popup-bodega {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+.contenedor-inicio-video {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.video-background-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  z-index: -1;
+  pointer-events: none;
+  /* Evita que el usuario pause el video */
+}
+
+/* Escalar para ocultar bordes negros de YouTube */
+.video-background-wrapper iframe {
+  transform: scale(1.4);
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  /* Oscurece un 50% el video */
+  z-index: 1;
+}
+
+.contenido-boton {
+  position: relative;
+  z-index: 2;
+  /* Pone el botón por encima del video y la capa oscura */
+  text-align: center;
+}
+
+.eslogan {
+  color: white;
+  margin-top: 15px;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+.contenedor-inicio-video {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Esto asegura que el video de YouTube cubra toda el área sin bordes negros */
+.video-background iframe {
+  transform: scale(1.5);
+}
+
+.overlay-negro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  /* Oscurece el video para que el botón resalte */
+  z-index: 1;
+}
+
+.contenido-interfaz {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.boton-iniciar-grande {
+  padding: 20px 50px;
+  font-size: 2.5rem;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
+  transition: transform 0.2s;
+}
+
+.boton-iniciar-grande:hover {
+  transform: scale(1.05);
+}
+.contenedor-principal-unificado {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente los hijos directos */
+  min-height: 100vh;
+  background: #000;
+  width: 100%;
+}
+
+/* El bloque que contiene el formulario o las tablas */
+.contenido-centrado {
+  width: 100%;
+  max-width: 1080px; /* El ancho que usa tu sección de informes */
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Contenedor principal para que todo quepa en una sola pantalla sin scroll */
+.contenedor-principal-unificado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  /* Ocupa exactamente el alto de la pantalla */
+  background: #000;
+  overflow: hidden;
+  /* Evita scroll innecesario al hacer zoom */
+}
+
+/* El bloque de contenido: Se expande para llenar el espacio y centrar su contenido */
+.contenido-centrado {
+  flex: 1;
+  /* Toma todo el espacio entre la navbar y el fondo */
+  width: 90%;
+  max-width: 1080px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* CENTRADO VERTICAL: Elimina el hueco arriba y abajo */
+  align-items: center;
+  padding: 2vh 0;
+  /* Pequeño respiro proporcional */
+}
+
+.titulo-sedes {
+  color: red;
+  font-size: clamp(2rem, 5vh, 4rem);
+  /* Tamaño fluido según el ALTO de pantalla */
+  font-weight: 800;
+  margin-bottom: 4vh;
+  /* Espacio proporcional al título */
+  text-align: center;
+}
+
+/* Grid de sedes: ajustado para que no se pegue abajo */
+.grid-sedes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3vh 2vw;
+  /* Espacio vertical y horizontal proporcional */
+  width: 100%;
+  max-height: 70vh;
+  /* Evita que las tarjetas se salgan por abajo */
+}
+
+.tarjeta-sede {
+  background: transparent;
+  color: white;
+  border: 3px solid red;
+  padding: 3vh 1vw;
+  /* Padding proporcional */
+  font-size: clamp(1.2rem, 2.5vh, 2.2rem);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: 0.3s;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.5s ease;
+  min-height: 15vh;
+  /* Se encoge o estira con el zoom */
 }
 
-.overlay.activo {
-  background: rgba(0, 0, 0, 0.7);
-  opacity: 1;
-  z-index: 5;
-}
+/* REEMPLAZA ESTAS CLASES EN TU ARCHIVO */
 
-.popup {
-  background: white;
-  color: black;
-  padding: 2rem 4rem;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 3rem;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
-}
-
-.tabla-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.contenedor-principal-unificado {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 1rem;
-  gap: 1.5rem;
-  box-sizing: border-box;
-}
-
-.tabla {
-  flex: 0.4;
-  margin-top: 1rem;
-}
-
-.tabla-titulo {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  margin-top: 0.5rem;
-  color: red;
-  text-align: center;
-}
-
-.tabla-style {
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  border-collapse: collapse;
-  font-size: 2.5rem;
+  height: 100vh;
+  /* Ocupa toda la pantalla para que no sobre espacio abajo */
+  background: #000;
+  overflow: hidden;
 }
 
-.tabla-style th,
-.tabla-style td {
-  padding: 1.2rem 2rem;
-  border-bottom: 2px solid white;
-  text-align: center;
-}
-
-.tabla-style th {
-  font-size: 2.8rem;       /* encabezados más grandes */
-  color: red;
-  font-weight: bold;
-}
-
-.logo {
-  flex: 0.6;
+.contenido-centrado {
+  flex: 1;
+  width: 90%;
+  max-width: 1080px;
+  /* Alineado con el recuadro de la Navbar */
   display: flex;
-  align-items: center; /* Centrar verticalmente */
-  justify-content: center;
-  padding: 1rem; /* Margen interno alrededor */
-  background-color: black;
-  border-radius: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* Empuja todo hacia arriba */
+  align-items: center;
+  padding-top: 2vh;
+  /* Espacio mínimo con la Navbar */
 }
 
-.logo-img {
-  max-width: 100%;
-  max-height: calc(100vh - 150px); /* Deja espacio para navbar y margen */
-  object-fit: contain;
-  border-radius: 10px;
+.titulo-sedes {
+  color: red;
+  font-size: clamp(2rem, 5vh, 4rem);
+  font-weight: 800;
+  margin-top: 0;
+  /* Eliminamos margen superior para que suba más */
+  margin-bottom: 5vh;
+  /* Espacio con las tarjetas */
+  text-align: center;
+  text-transform: uppercase;
 }
 
-/* 🔘 Botón de pantalla completa */
-.boton-pantalla {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: red;
+.grid-sedes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3vh 2vw;
+  width: 100%;
+}
+
+.tarjeta-sede {
+  background: transparent;
   color: white;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1.3rem;
+  border: 4px solid red;
+  padding: 3vh 1vw;
+  font-size: clamp(1.2rem, 2.2vh, 2rem);
+  font-weight: bold;
   cursor: pointer;
-  border-radius: 10px;
-  z-index: 10;
-  transition: background 0.3s ease, transform 0.2s ease;
+  border-radius: 15px;
+  transition: 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 14vh;
+  /* Ajuste proporcional para que quepan bien */
 }
-
-.boton-pantalla:hover {
-  background: darkred;
-  transform: scale(1.05);
-}
-

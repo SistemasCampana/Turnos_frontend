@@ -1,142 +1,190 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Navbar from "./Navbar";
 import "./MostrarTurno.css";
 
+const CONFIGURACION_SEDES = {
+  "Ricaurte 1": [1],
+  "Ricaurte 2": [1],
+  "7 de Agosto": [1],
+  "Paloquemao": [1, 2, 3]
+};
+
 const MostrarTurno = () => {
+  const [sedeActiva, setSedeActiva] = useState(null);
+  const [turnosPorBodega, setTurnosPorBodega] = useState({});
   const [turnoActual, setTurnoActual] = useState(null);
-  const [historial, setHistorial] = useState([]);
-  const audioRef = useRef(null);
-  const ultimoIdRef = useRef(null);
   const [mostrarAnimacion, setMostrarAnimacion] = useState(false);
   const [audioHabilitado, setAudioHabilitado] = useState(false);
   const [pantallaCompleta, setPantallaCompleta] = useState(false);
+
+  const audioRef = useRef(null);
+  const ultimoIdRef = useRef(null);
   const contenedorRef = useRef(null);
 
+  // 1. Cargar datos de la sede seleccionada
+  useEffect(() => {
+    if (sedeActiva) {
+      const llaveSede = `turnos_${sedeActiva.replace(/\s+/g, '_')}`;
+      const guardado = localStorage.getItem(llaveSede);
+
+      if (guardado) {
+        setTurnosPorBodega(JSON.parse(guardado));
+      } else {
+        const inicial = {};
+        CONFIGURACION_SEDES[sedeActiva].forEach(num => {
+          inicial[num] = { nombre_cliente: "—" };
+        });
+        setTurnosPorBodega(inicial);
+      }
+      ultimoIdRef.current = null;
+    }
+  }, [sedeActiva]);
+
+  // 2. Consulta de turnos (Sonido solo aquí)
+  const fetchTurno = useCallback(async () => {
+    if (!audioHabilitado || !sedeActiva) return;
+
+    try {
+      const sedeUrl = encodeURIComponent(sedeActiva);
+      const res = await fetch(`https://turnos-backend-pcyf.onrender.com/api/turnos/ultimo?sede=${sedeUrl}&t=${Date.now()}`);
+
+      if (!res.ok) return;
+      const data = await res.json();
+
+      // VALIDACIÓN: ¿Es un turno nuevo?
+      if (data && data.id && data.id !== ultimoIdRef.current) {
+        if (data.sede === sedeActiva) {
+          ultimoIdRef.current = data.id;
+
+          // REPRODUCCIÓN: Solo suena cuando hay un cambio de ID
+          if (audioRef.current) {
+            audioRef.current.play().catch(e => console.log("Audio play blocked:", e));
+          }
+
+          setTurnoActual(data);
+          const idBodega = parseInt(data.bodega);
+
+          setTurnosPorBodega((prev) => {
+            const nuevoEstado = {
+              ...prev,
+              [idBodega]: { nombre_cliente: data.nombre_cliente }
+            };
+            const llaveSede = `turnos_${sedeActiva.replace(/\s+/g, '_')}`;
+            localStorage.setItem(llaveSede, JSON.stringify(nuevoEstado));
+            return nuevoEstado;
+          });
+
+          setMostrarAnimacion(true);
+          setTimeout(() => setMostrarAnimacion(false), 4000);
+        }
+      }
+    } catch (error) {
+      console.error("⚠️ Error en fetchTurno:", error);
+    }
+  }, [audioHabilitado, sedeActiva]);
+
+  // 3. Intervalo de actualización
+  useEffect(() => {
+    let intervalo;
+    if (audioHabilitado && sedeActiva) {
+      fetchTurno();
+      intervalo = setInterval(fetchTurno, 3000);
+    }
+    return () => { if (intervalo) clearInterval(intervalo); };
+  }, [audioHabilitado, sedeActiva, fetchTurno]);
+
+  // CORRECCIÓN: Habilita el permiso de audio sin sonar la campana
   const habilitarAudio = () => {
     if (audioRef.current) {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.load(); // Desbloquea el permiso del navegador silenciosamente
     }
     setAudioHabilitado(true);
   };
 
-  // 👉 Alternar pantalla completa
   const togglePantallaCompleta = () => {
     if (!document.fullscreenElement) {
-      contenedorRef.current.requestFullscreen().catch((err) => {
-        console.error("Error al entrar en pantalla completa:", err);
-      });
+      contenedorRef.current.requestFullscreen();
+      setPantallaCompleta(true);
     } else {
       document.exitFullscreen();
+      setPantallaCompleta(false);
     }
   };
-
-  // Detectar cambios en pantalla completa
-  useEffect(() => {
-    const manejarCambioPantalla = () => {
-      setPantallaCompleta(!!document.fullscreenElement);
-    };
-    document.addEventListener("fullscreenchange", manejarCambioPantalla);
-    return () => document.removeEventListener("fullscreenchange", manejarCambioPantalla);
-  }, []);
-
-  const fetchTurno = async () => {
-    if (!audioHabilitado) return;
-
-    try {
-      const res = await fetch("https://turnos-backend-pcyf.onrender.com/api/turnos/ultimo");
-
-      if (!res.ok) {
-        const txt = await res.text();
-        console.error("❌ /ultimo falló:", res.status, txt);
-        return;
-      }
-
-      const data = await res.json();
-
-      if (data && data.id && data.id !== ultimoIdRef.current) {
-        ultimoIdRef.current = data.id;
-
-        // Sonido
-        if (audioRef.current) audioRef.current.play();
-
-        setTurnoActual(data);
-        setHistorial((prev) => [data, ...prev].slice(0, 5));
-
-        // Animación
-        setMostrarAnimacion(true);
-        setTimeout(() => setMostrarAnimacion(false), 4000);
-      }
-    } catch (error) {
-      console.error("⚠️ Error obteniendo turno:", error);
-    }
-  };
-
-  useEffect(() => {
-    if (audioHabilitado) {
-      fetchTurno();
-      const intervalo = setInterval(fetchTurno, 3000);
-      return () => clearInterval(intervalo);
-    }
-  }, [audioHabilitado]);
 
   return (
     <div ref={contenedorRef} className="pantalla">
-      {/* 👇 Ocultamos la Navbar cuando esté en pantalla completa */}
       {!pantallaCompleta && <Navbar />}
-
-      <audio ref={audioRef} src="/campana.wav" />
+      <audio ref={audioRef} src="/campana.wav" preload="auto" />
 
       {!audioHabilitado ? (
-        <button className="boton-iniciar" onClick={habilitarAudio}>
-          Iniciar Pantalla
-        </button>
+        <div className="contenedor-inicio">
+          <button className="boton-iniciar" onClick={habilitarAudio}>
+            INICIAR SISTEMA
+          </button>
+        </div>
       ) : (
         <>
-          {/* 🔘 BOTÓN PANTALLA COMPLETA */}
-          <button className="boton-pantalla" onClick={togglePantallaCompleta}>
-            {pantallaCompleta ? "⛶" : "⛶"}
-          </button>
-
-          {/* POPUP ANIMADO */}
-          <div className={`overlay ${mostrarAnimacion ? "activo" : ""}`}>
-            {mostrarAnimacion && turnoActual && (
-              <div className="popup">
-                <div>
-                  Cliente: <strong>{turnoActual.nombre_cliente || "—"}</strong>
+          {!sedeActiva ? (
+            /* --- SELECCIÓN DE SEDE CORREGIDA --- */
+            <div className="contenedor-principal-unificado">
+              <main className="contenido-centrado">
+                <h1 className="titulo-sedes">SELECCIONE SU SEDE</h1>
+                <div className="grid-sedes">
+                  {Object.keys(CONFIGURACION_SEDES).map((s) => (
+                    <button
+                      key={s}
+                      className="tarjeta-sede"
+                      onClick={() => setSedeActiva(s)}
+                    >
+                      {s}
+                    </button>
+                  ))}
                 </div>
-                <div>
-                  Bodega: <strong>{turnoActual.bodega || "—"}</strong>
+              </main>
+            </div>
+          ) : (
+            /* --- TABLA DE TURNOS --- */
+            <div className="vista-turnos">
+              <div className="controles-superiores">
+                <button className="boton-volver" onClick={() => setSedeActiva(null)}>← Volver</button>
+                <h2 className="nombre-sede">{sedeActiva}</h2>
+                <button className="boton-pantalla" onClick={togglePantallaCompleta}>⛶</button>
+              </div>
+
+              <div className={`overlay ${mostrarAnimacion ? "activo" : ""}`}>
+                {mostrarAnimacion && turnoActual && (
+                  <div className="popup">
+                    <div className="popup-titulo">¡NUEVO TURNO!</div>
+                    <div className="popup-nombre">{turnoActual.nombre_cliente}</div>
+                    <div className="popup-bodega">BODEGA {turnoActual.bodega}</div>
+                  </div>
+                )}
+              </div>
+
+              <div className="tabla-container">
+                <div className="tabla">
+                  <table className="tabla-style">
+                    <thead>
+                      <tr><th>BODEGA</th><th>CLIENTE</th></tr>
+                    </thead>
+                    <tbody>
+                      {CONFIGURACION_SEDES[sedeActiva].map((num) => (
+                        <tr key={num} className={turnoActual?.bodega === num && mostrarAnimacion ? "fila-flash" : ""}>
+                          <td className="celda-bodega">BODEGA {num}</td>
+                          <td className="celda-cliente">
+                            {turnosPorBodega[num] ? turnosPorBodega[num].nombre_cliente : "—"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="logo">
+                  <img src="/logo.png" alt="Logo" className="logo-img" />
                 </div>
               </div>
-            )}
-          </div>
-
-          {/* TABLA DE HISTORIAL */}
-          <div className="tabla-container">
-            <div className="tabla">
-              <h2 className="tabla-titulo">TURNOS</h2>
-              <table className="tabla-style">
-                <thead>
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Bodega</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {historial.map((t, idx) => (
-                    <tr key={idx}>
-                      <td>{t.nombre_cliente || "—"}</td>
-                      <td>{t.bodega || "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
-
-            <div className="logo">
-              <img src="/logo.png" alt="Logo Empresa" className="logo-img" />
-            </div>
-          </div>
+          )}
         </>
       )}
     </div>

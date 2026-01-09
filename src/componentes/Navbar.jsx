@@ -1,55 +1,57 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const reiniciarTurnos = async () => {
     if (!window.confirm("⚠️ ¿Seguro que quieres reiniciar todos los turnos?")) return;
-
     try {
-      // Nota: Tu URL de backend es 'https://turnos-backend-pcyf.onrender.com'
       const res = await fetch("https://turnos-backend-pcyf.onrender.com/api/turnos/reiniciar", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }
+        headers: { "Content-Type": "application/json" }
       });
-
-      if (!res.ok) {
-        const txt = await res.text();
-        alert("Error al reiniciar turnos: " + txt);
-        return;
-      }
-
-      alert("✅ Turnos reiniciados correctamente");
+      if (res.ok) alert("✅ Turnos reiniciados correctamente");
     } catch (err) {
-      console.error("Error reiniciando turnos:", err);
-      alert("Error de conexión con el servidor");
+      alert("Error de conexión");
     }
   };
 
   return (
-    <nav className="navbar">
-      {/* <button className="navButton" onClick={() => navigate("/turno")}>
-        Solicitar Turno
-      </button> */}
-      <button className="navButton" onClick={() => navigate("/pantalla")}>
-        👁️
-      </button>
-      <button className="navButton" onClick={() => navigate("/panel")}>
-        ⌨︎
-      </button>
+    <nav className="navbar-wrapper">
+      <div className="navbar-recuadro">
+        <div className="navbar-links">
+          <button
+            className={`navButton ${location.pathname === "/pantalla" ? "active" : ""}`}
+            onClick={() => navigate("/pantalla")}
+          >
+            Inicio 👁️
+          </button>
+          <button
+            className={`navButton ${location.pathname === "/panel" ? "active" : ""}`}
+            onClick={() => navigate("/panel")}
+          >
+            Panel ⌨︎
+          </button>
+          <button
+            className={`navButton ${location.pathname === "/informe" ? "active" : ""}`}
+            onClick={() => navigate("/informe")}
+          >
+            Informes 📊
+          </button>
+          <button className="btnReiniciar" onClick={reiniciarTurnos}>
+            Reiniciar turnos 🔄
+          </button>
+        </div>
 
-      {/* 📊 NUEVO BOTÓN PARA GENERAR EL INFORME */}
-      <button className="navButton" onClick={() => navigate("/informe")}>
-        📊
-      </button>
-      
-      <button className="btnReiniciar" onClick={reiniciarTurnos}>
-        🔄
-      </button>
+        <div className="navbar-extra">
+          <button className="btnRegistroSmall" onClick={() => navigate("/registro")}>
+            Registro de usuarios
+          </button>
+        </div>
+      </div>
     </nav>
   );
 };

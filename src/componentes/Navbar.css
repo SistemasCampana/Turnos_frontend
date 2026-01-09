@@ -1,36 +1,87 @@
-.navbar {
-  background: #1a1a1a;
-  padding: 1rem;
+/* Contenedor invisible para centrar el recuadro */
+.navbar-wrapper {
+  width: 100%;
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  border-bottom: 2px solid red;
+  background-color: transparent;
+  /* Para que se vean los espacios a los lados */
+  padding-top: 20px;
+  /* Espacio arriba del recuadro */
 }
 
+/* EL RECUADRO NEGRO (La barra limitada) */
+.navbar-recuadro {
+  width: 95%;
+  /* Se adapta a pantallas pequeñas */
+  max-width: 1080px;
+  /* Ancho máximo igual al de los informes */
+  background: #111;
+  /* Color oscuro del panel */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 25px;
+  border-radius: 12px;
+  /* Bordes redondeados para el efecto de recuadro */
+  border-bottom: 3px solid #dc2626;
+  /* Línea roja de informes */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  /* Sombra para resaltar */
+}
+
+/* Grupo de botones izquierdos */
+.navbar-links {
+  display: flex;
+  gap: 15px;
+}
+
+/* Botones con estilo Gris/Rojo unificado */
 .navButton {
-  padding: 0.5rem 1rem;
-  background: red;
+  padding: 0.6rem 1.2rem;
+  background: #2a2a2a;
+  /* Gris base */
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
 }
 
-.navButton:hover {
-  background: #b30000;
+/* Color rojo cuando está activo o pasas el mouse */
+.navButton:hover,
+.navButton.active {
+  background: #ff0000;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
 }
 
 .btnReiniciar {
-  padding: 0.5rem 1rem;
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: #444;
+  /* Un gris distinto para diferenciarlo */
+  color: #ff9999;
+  border: 1px solid #555;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  font-weight: bold;
 }
 
 .btnReiniciar:hover {
-  background: #c82333;
+  background: #dc3545;
+  color: white;
+}
+
+/* Botón de registro a la derecha */
+.btnRegistroSmall {
+  background: #ff0000;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnRegistroSmall:hover {
+  transform: scale(1.05);
 }
