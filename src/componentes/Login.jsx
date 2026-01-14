@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // 🔹 Importante para las rutas
+import { useNavigate } from "react-router-dom"; // 🔹 ESTO ES LO QUE FALTA
 import "./Login.css";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // 🔹 Hook para redireccionar
+  const navigate = useNavigate(); // 🔹 Inicializamos el navegador
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,32 +17,30 @@ export default function Login({ onLogin }) {
         { username, password }
       );
 
-      // 🔹 1. GUARDAR DATOS EN LOCALSTORAGE
+      // 🔹 GUARDAR TODO EN LOCALSTORAGE
       localStorage.setItem("token", res.data.access_token);
-      localStorage.setItem("rol", res.data.rol);
+      localStorage.setItem("rol", res.data.rol.toLowerCase());
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("sede", res.data.sede);
 
-      // 🔹 2. NOTIFICAR LOGIN EXITOSO
+      // 🔹 NOTIFICAR AL APP.JS
       if (typeof onLogin === "function") {
         onLogin();
       }
 
-      // 🔹 3. REDIRECCIÓN SEGÚN ROL (SIN ENREDOS)
+      // 🔹 REDIRECCIÓN AUTOMÁTICA SEGÚN EL ROL
       const rol = res.data.rol.toLowerCase();
+      console.log("Redirigiendo usuario con rol:", rol);
 
       if (rol === "visor") {
-        // El visor ingresa de una vez a mostrar turnos
         navigate("/pantalla");
-      } else if (rol === "administrador" || rol === "cajero") {
-        // Administrador (acceso total) y Cajero (solo su panel) van al Panel
+      } else {
+        // Administradores y Cajeros van al panel
         navigate("/panel");
       }
 
     } catch (error) {
-      if (error.response) {
-        console.error("📡 Error:", error.response.data);
-      }
+      console.error("📡 Error en Login:", error.response?.data || error.message);
       alert("Usuario o contraseña incorrectos");
     }
   };
