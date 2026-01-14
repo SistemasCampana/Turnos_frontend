@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // 🔹 Importante para las rutas
 import "./Login.css";
 
 export default function Login({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // 🔹 Hook para redireccionar
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,17 +17,28 @@ export default function Login({ onLogin }) {
         { username, password }
       );
 
-      // 🔹 GUARDAR TODO EN LOCALSTORAGE
+      // 🔹 1. GUARDAR DATOS EN LOCALSTORAGE
       localStorage.setItem("token", res.data.access_token);
-      localStorage.setItem("rol", res.data.rol); // 'administrador', 'cajero', 'visor'
+      localStorage.setItem("rol", res.data.rol);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("sede", res.data.sede);
 
+      // 🔹 2. NOTIFICAR LOGIN EXITOSO
       if (typeof onLogin === "function") {
         onLogin();
-      } else {
-        console.warn("⚠️ No se pasó la función onLogin como prop.");
       }
+
+      // 🔹 3. REDIRECCIÓN SEGÚN ROL (SIN ENREDOS)
+      const rol = res.data.rol.toLowerCase();
+
+      if (rol === "visor") {
+        // El visor ingresa de una vez a mostrar turnos
+        navigate("/pantalla");
+      } else if (rol === "administrador" || rol === "cajero") {
+        // Administrador (acceso total) y Cajero (solo su panel) van al Panel
+        navigate("/panel");
+      }
+
     } catch (error) {
       if (error.response) {
         console.error("📡 Error:", error.response.data);
