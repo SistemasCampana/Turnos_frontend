@@ -6,6 +6,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // 🔹 Obtenemos el rol guardado en el login
+  const rol = localStorage.getItem("rol")?.toLowerCase();
+
   const reiniciarTurnos = async () => {
     if (!window.confirm("⚠️ ¿Seguro que quieres reiniciar todos los turnos?")) return;
     try {
@@ -19,41 +22,63 @@ const Navbar = () => {
     }
   };
 
-  return (
+  const cerrarSesion = () => {
+    localStorage.clear();
+    navigate("/");
+  };
 
+  return (
     <nav className="navbar-wrapper">
       <div className="navbar-recuadro">
         <div className="navbar-links">
+          {/* ✅ VISIBLE PARA TODOS */}
           <button
             className={`navButton ${location.pathname === "/pantalla" ? "active" : ""}`}
             onClick={() => navigate("/pantalla")}
           >
             Inicio 👁️
           </button>
-          <button
-            className={`navButton ${location.pathname === "/panel" ? "active" : ""}`}
-            onClick={() => navigate("/panel")}
-          >
-            Panel ⌨︎
-          </button>
-          <button
-            className={`navButton ${location.pathname === "/informe" ? "active" : ""}`}
-            onClick={() => navigate("/informe")}
-          >
-            Informes 📊
-          </button>
-          <button className="btnReiniciar" onClick={reiniciarTurnos}>
-            Reiniciar turnos 🔄
-          </button>
+
+          {/* ✅ VISIBLE PARA CAJERO Y ADMINISTRADOR */}
+          {(rol === "cajero" || rol === "administrador") && (
+            <button
+              className={`navButton ${location.pathname === "/panel" ? "active" : ""}`}
+              onClick={() => navigate("/panel")}
+            >
+              Panel ⌨︎
+            </button>
+          )}
+
+          {/* ❌ SOLO PARA ADMINISTRADOR */}
+          {rol === "administrador" && (
+            <>
+              <button
+                className={`navButton ${location.pathname === "/informe" ? "active" : ""}`}
+                onClick={() => navigate("/informe")}
+              >
+                Informes 📊
+              </button>
+              <button className="btnReiniciar" onClick={reiniciarTurnos}>
+                Reiniciar turnos 🔄
+              </button>
+            </>
+          )}
         </div>
 
         <div className="navbar-extra">
-          <button className="btnRegistroSmall" onClick={() => navigate("/registro")}>
-            Registro de usuarios
+          {/* ❌ SOLO PARA ADMINISTRADOR */}
+          {rol === "administrador" && (
+            <button className="btnRegistroSmall" onClick={() => navigate("/registro")}>
+              Registro de usuarios
+            </button>
+          )}
+
+          {/* BOTÓN DE SALIR (Siempre visible para poder desloguearse) */}
+          <button className="btnReiniciar" style={{ backgroundColor: '#d9534f', marginLeft: '10px' }} onClick={cerrarSesion}>
+            Salir 🚪
           </button>
         </div>
       </div>
-
     </nav>
   );
 };
