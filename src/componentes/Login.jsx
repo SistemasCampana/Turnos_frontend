@@ -9,16 +9,17 @@ export default function Login({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Usuario enviado:", username);
-    console.log("Contraseña enviada:", password);
-
     try {
       const res = await axios.post(
-     "https://turnos-backend-pcyf.onrender.com/api/login",
+        "https://turnos-backend-pcyf.onrender.com/api/login",
         { username, password }
       );
 
+      // 🔹 GUARDAR TODO EN LOCALSTORAGE
       localStorage.setItem("token", res.data.access_token);
+      localStorage.setItem("rol", res.data.rol); // 'administrador', 'cajero', 'visor'
+      localStorage.setItem("username", res.data.username);
+      localStorage.setItem("sede", res.data.sede);
 
       if (typeof onLogin === "function") {
         onLogin();
@@ -27,12 +28,7 @@ export default function Login({ onLogin }) {
       }
     } catch (error) {
       if (error.response) {
-        console.error("📡 Respuesta del servidor:", error.response.data);
-        console.error("📋 Código de estado:", error.response.status);
-      } else if (error.request) {
-        console.error("⏳ No hubo respuesta del servidor:", error.request);
-      } else {
-        console.error("⚠️ Error configurando la petición:", error.message);
+        console.error("📡 Error:", error.response.data);
       }
       alert("Usuario o contraseña incorrectos");
     }
@@ -46,12 +42,14 @@ export default function Login({ onLogin }) {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Usuario"
+          required
         />
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
+          required
         />
         <button type="submit">Ingresar</button>
       </form>

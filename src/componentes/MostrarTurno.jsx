@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "./MostrarTurno.css";
 
@@ -10,7 +11,9 @@ const CONFIGURACION_SEDES = {
 };
 
 const MostrarTurno = () => {
-  const [sedeActiva, setSedeActiva] = useState(null);
+  const navigate = useNavigate();
+  // 🔹 MEJORA: Si el usuario ya tiene una sede asignada (Cajero/Admin), la usamos por defecto
+  const [sedeActiva, setSedeActiva] = useState(localStorage.getItem("sede") || null);
   const [turnosPorBodega, setTurnosPorBodega] = useState({});
   const [turnoActual, setTurnoActual] = useState(null);
   const [mostrarAnimacion, setMostrarAnimacion] = useState(false);
@@ -31,16 +34,18 @@ const MostrarTurno = () => {
         setTurnosPorBodega(JSON.parse(guardado));
       } else {
         const inicial = {};
-        CONFIGURACION_SEDES[sedeActiva].forEach(num => {
-          inicial[num] = { nombre_cliente: "—" };
-        });
-        setTurnosPorBodega(inicial);
+        if (CONFIGURACION_SEDES[sedeActiva]) {
+          CONFIGURACION_SEDES[sedeActiva].forEach(num => {
+            inicial[num] = { nombre_cliente: "—" };
+          });
+          setTurnosPorBodega(inicial);
+        }
       }
       ultimoIdRef.current = null;
     }
   }, [sedeActiva]);
 
-  // 2. Consulta de turnos (Sonido solo aquí)
+  // 2. Consulta de turnos
   const fetchTurno = useCallback(async () => {
     if (!audioHabilitado || !sedeActiva) return;
 
@@ -51,12 +56,10 @@ const MostrarTurno = () => {
       if (!res.ok) return;
       const data = await res.json();
 
-      // VALIDACIÓN: ¿Es un turno nuevo?
       if (data && data.id && data.id !== ultimoIdRef.current) {
         if (data.sede === sedeActiva) {
           ultimoIdRef.current = data.id;
 
-          // REPRODUCCIÓN: Solo suena cuando hay un cambio de ID
           if (audioRef.current) {
             audioRef.current.play().catch(e => console.log("Audio play blocked:", e));
           }
@@ -93,11 +96,8 @@ const MostrarTurno = () => {
     return () => { if (intervalo) clearInterval(intervalo); };
   }, [audioHabilitado, sedeActiva, fetchTurno]);
 
-  // CORRECCIÓN: Habilita el permiso de audio sin sonar la campana
   const habilitarAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.load(); // Desbloquea el permiso del navegador silenciosamente
-    }
+    if (audioRef.current) audioRef.current.load();
     setAudioHabilitado(true);
   };
 
@@ -119,13 +119,12 @@ const MostrarTurno = () => {
       {!audioHabilitado ? (
         <div className="contenedor-inicio">
           <button className="boton-iniciar" onClick={habilitarAudio}>
-            INICIAR SISTEMA
+            INICIAR SISTEMA DE TURNOS
           </button>
         </div>
       ) : (
         <>
           {!sedeActiva ? (
-            /* --- SELECCIÓN DE SEDE CORREGIDA --- */
             <div className="contenedor-principal-unificado">
               <main className="contenido-centrado">
                 <h1 className="titulo-sedes">SELECCIONE SU SEDE</h1>
@@ -143,10 +142,12 @@ const MostrarTurno = () => {
               </main>
             </div>
           ) : (
-            /* --- TABLA DE TURNOS --- */
             <div className="vista-turnos">
               <div className="controles-superiores">
-                <button className="boton-volver" onClick={() => setSedeActiva(null)}>← Volver</button>
+                {/* 🔹 Solo mostramos el botón volver si NO es un usuario con sede fija */}
+                {!localStorage.getItem("sede") && (
+                  <button className="boton-volver" onClick={() => setSedeActiva(null)}>← Volver</button>
+                )}
                 <h2 className="nombre-sede">{sedeActiva}</h2>
                 <button className="boton-pantalla" onClick={togglePantallaCompleta}>⛶</button>
               </div>
@@ -168,7 +169,7 @@ const MostrarTurno = () => {
                       <tr><th>BODEGA</th><th>CLIENTE</th></tr>
                     </thead>
                     <tbody>
-                      {CONFIGURACION_SEDES[sedeActiva].map((num) => (
+                      {CONFIGURACION_SEDES[sedeActiva]?.map((num) => (
                         <tr key={num} className={turnoActual?.bodega === num && mostrarAnimacion ? "fila-flash" : ""}>
                           <td className="celda-bodega">BODEGA {num}</td>
                           <td className="celda-cliente">
