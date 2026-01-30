@@ -32,52 +32,77 @@
   transition: transform 0.3s ease;
 }
 
-/* 3. SELECCIÓN DE SEDES */
-.contenedor-sedes {
-  flex: 1;
+/* 3. SELECCIÓN DE SEDES - MEJORADO */
+.contenedor-principal-unificado {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
+  width: 100%;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+  padding-top: 5vh;
+}
+
+.contenido-centrado {
+  flex: 1;
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 2vh;
 }
 
 .titulo-sedes {
-  font-size: clamp(2.5rem, 6vw, 5rem);
   color: red;
-  margin-bottom: 5vh;
-  text-transform: uppercase;
+  font-size: clamp(2.5rem, 6vh, 4.5rem);
+  font-weight: 900;
+  margin-top: 0;
+  margin-bottom: 8vh;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .grid-sedes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  width: 90%;
-  max-width: 1200px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 4vh 3vw;
+  width: 100%;
 }
 
 .tarjeta-sede {
-  background: transparent;
+  background: rgba(255, 0, 0, 0.05);
   color: white;
-  border: 5px solid red;
-  padding: 5vh 2rem;
-  font-size: clamp(1.5rem, 2.5vw, 3.5rem);
-  font-weight: bold;
+  border: 4px solid red;
+  padding: 4vh 2vw;
+  font-size: clamp(1.8rem, 3.5vh, 2.8rem);
+  font-weight: 800;
   cursor: pointer;
   border-radius: 20px;
   transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 18vh;
   text-transform: uppercase;
+  box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
 }
 
-/* 4. CABECERA (PROPORCIONAL) */
+.tarjeta-sede:hover {
+  background: red;
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+}
+
+/* 4. CABECERA */
 .controles-superiores {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 8vh;
-  /* Altura fija relativa al alto de pantalla */
   padding: 0 3vw;
   background: rgba(255, 0, 0, 0.1);
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
@@ -87,73 +112,123 @@
   font-size: clamp(1.5rem, 3vh, 2.5rem);
 }
 
-/* 5. DISTRIBUCIÓN PROPORCIONAL (TABLA E IMAGEN) */
+/* 5. DISTRIBUCIÓN DINÁMICA: TABLA Y BANNER */
+.vista-turnos {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
 .tabla-container {
   display: flex;
   flex: 1;
-  /* Ocupa todo el resto de la pantalla */
   width: 100%;
+  height: calc(100vh - 8vh);
   padding: 2vh 2vw;
   box-sizing: border-box;
   gap: 2vw;
   align-items: stretch;
-  /* Estira los hijos para llenar el alto */
+  overflow: hidden;
 }
 
 .tabla {
-  flex: 1.2;
-  /* Un poco más ancho que el logo */
+  flex: 1.5;
   display: flex;
   flex-direction: column;
+  background: #000;
+  border-radius: 15px;
+  border: 3px solid rgba(255, 0, 0, 0.4);
   overflow: hidden;
 }
 
 .tabla-style {
   width: 100%;
   height: 100%;
-  /* Obliga a la tabla a ocupar el alto del contenedor */
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .tabla-style th {
-  font-size: clamp(1.5rem, 4vh, 3rem);
-  color: red;
-  padding: 1vh;
-  border-bottom: 4px solid red;
+  height: 12%;
+  font-size: clamp(1.5rem, 4vh, 2.5rem);
+  color: #ff0000;
+  padding: 2vh;
+  border-bottom: 3px solid #ff0000;
   text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.tabla-style tr {
+  height: 29.3%;
+  /* Reparto equitativo para las 3 bodegas */
 }
 
 .tabla-style td {
-  font-size: clamp(2rem, 8vh, 6rem);
-  /* El texto crece según el ALTO de la pantalla */
-  padding: 1vh 2vw;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  font-size: clamp(2rem, 7vh, 5.5rem);
+  padding: 1.5vh 2vw;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
-  font-weight: bold;
+  font-weight: 900;
+  text-transform: uppercase;
+  vertical-align: middle;
 }
 
 .celda-bodega {
-  color: red;
-  width: 40%;
+  color: #ff0000;
+  width: 35%;
 }
 
-/* CONTENEDOR DEL LOGO */
-.logo {
-  flex: 0.8;
+.celda-cliente {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  word-break: break-all;
+}
+
+.tabla-style tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.logo-visor {
+  flex: 0.9;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.02);
+  background: #000;
   border-radius: 20px;
+  border: 4px solid #ff0000;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
 }
 
 .logo-img {
-  max-width: 90%;
-  max-height: 80%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* 6. POPUP RESPONSIVO */
+/* 6. ARREGLO POPUP (CENTRADO TOTAL) */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s;
+}
+
+.overlay.activo {
+  opacity: 1;
+  visibility: visible;
+}
+
 .popup {
   background: white;
   color: black;
@@ -163,116 +238,73 @@
   border-radius: 40px;
   text-align: center;
   box-shadow: 0 0 100px red;
+  border: 10px solid red;
+}
+
+.animate-pop {
+  animation: popIn 0.5s cubic-bezier(0.17, 0.89, 0.32, 1.49);
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .popup-titulo {
   font-size: clamp(1.5rem, 4vw, 3rem);
   color: red;
+  font-weight: 800;
+}
+
+.popup-numero {
+  font-size: clamp(6rem, 15vw, 12rem);
+  font-weight: 900;
+  line-height: 1;
+  margin: 1vh 0;
 }
 
 .popup-nombre {
-  font-size: clamp(3rem, 10vw, 8rem);
-  line-height: 1;
+  font-size: clamp(3rem, 10vw, 7rem);
+  line-height: 1.1;
   margin: 2vh 0;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .popup-bodega {
   font-size: clamp(2rem, 5vw, 4rem);
-}
-.contenedor-inicio-video {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-}
-
-.video-background-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  /* Evita que el usuario pause el video */
-}
-
-/* Escalar para ocultar bordes negros de YouTube */
-.video-background-wrapper iframe {
-  transform: scale(1.4);
-}
-
-.video-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  /* Oscurece un 50% el video */
-  z-index: 1;
-}
-
-.contenido-boton {
-  position: relative;
-  z-index: 2;
-  /* Pone el botón por encima del video y la capa oscura */
-  text-align: center;
-}
-
-.eslogan {
+  background: red;
   color: white;
-  margin-top: 15px;
-  font-size: 1.2rem;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-weight: 300;
-}
-.contenedor-inicio-video {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #000;
+  display: inline-block;
+  padding: 10px 40px;
+  border-radius: 100px;
+  font-weight: 800;
 }
 
-.video-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+/* Efectos de Pantalla Completa y Flash */
+:fullscreen .tabla-container {
+  padding: 3vh 3vw;
 }
 
-/* Esto asegura que el video de YouTube cubra toda el área sin bordes negros */
-.video-background iframe {
-  transform: scale(1.5);
+:fullscreen .tabla-style td {
+  font-size: clamp(2rem, 8vh, 7rem);
 }
 
-.overlay-negro {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  /* Oscurece el video para que el botón resalte */
-  z-index: 1;
+.fila-flash {
+  animation: flashEffect 1s infinite;
 }
 
-.contenido-interfaz {
-  position: relative;
-  z-index: 2;
-  text-align: center;
+@keyframes flashEffect {
+  50% {
+    background: rgba(255, 0, 0, 0.4);
+  }
 }
 
 .boton-iniciar-grande {
@@ -288,154 +320,44 @@
   transition: transform 0.2s;
 }
 
-.boton-iniciar-grande:hover {
-  transform: scale(1.05);
-}
-.contenedor-principal-unificado {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centra horizontalmente los hijos directos */
-  min-height: 100vh;
-  background: #000;
-  width: 100%;
-}
-
-/* El bloque que contiene el formulario o las tablas */
-.contenido-centrado {
-  width: 100%;
-  max-width: 1080px; /* El ancho que usa tu sección de informes */
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/* Contenedor principal para que todo quepa en una sola pantalla sin scroll */
-.contenedor-principal-unificado {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  /* Ocupa exactamente el alto de la pantalla */
-  background: #000;
-  overflow: hidden;
-  /* Evita scroll innecesario al hacer zoom */
-}
-
-/* El bloque de contenido: Se expande para llenar el espacio y centrar su contenido */
-.contenido-centrado {
-  flex: 1;
-  /* Toma todo el espacio entre la navbar y el fondo */
+/* AJUSTE SEDES: Margen para que no peguen al ras */
+.contenido-centrado-sedes {
   width: 90%;
-  max-width: 1080px;
+  margin: 5vh auto;
+  /* Añade espacio arriba y a los lados */
+  padding: 4vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* CENTRADO VERTICAL: Elimina el hueco arriba y abajo */
   align-items: center;
-  padding: 2vh 0;
-  /* Pequeño respiro proporcional */
 }
 
-.titulo-sedes {
-  color: red;
-  font-size: clamp(2rem, 5vh, 4rem);
-  /* Tamaño fluido según el ALTO de pantalla */
+/* AJUSTE TABLA: Más espacio para nombres y recuadros grandes */
+.tabla-style td {
+  /* Ajustamos el tamaño para que quepan nombres largos en una línea */
+  font-size: clamp(1.8rem, 6vh, 4.8rem);
+  padding: 2vh 1vw;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   font-weight: 800;
-  margin-bottom: 4vh;
-  /* Espacio proporcional al título */
-  text-align: center;
-}
-
-/* Grid de sedes: ajustado para que no se pegue abajo */
-.grid-sedes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 3vh 2vw;
-  /* Espacio vertical y horizontal proporcional */
-  width: 100%;
-  max-height: 70vh;
-  /* Evita que las tarjetas se salgan por abajo */
-}
-
-.tarjeta-sede {
-  background: transparent;
-  color: white;
-  border: 3px solid red;
-  padding: 3vh 1vw;
-  /* Padding proporcional */
-  font-size: clamp(1.2rem, 2.5vh, 2.2rem);
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 15px;
-  transition: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 15vh;
-  /* Se encoge o estira con el zoom */
-}
-
-/* REEMPLAZA ESTAS CLASES EN TU ARCHIVO */
-
-.contenedor-principal-unificado {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-  /* Ocupa toda la pantalla para que no sobre espacio abajo */
-  background: #000;
+  white-space: nowrap;
+  /* Evita que el nombre salte abajo */
   overflow: hidden;
+  text-overflow: ellipsis;
+  /* Si es exageradamente largo, pone puntos suspensivos */
 }
 
-.contenido-centrado {
-  flex: 1;
-  width: 90%;
-  max-width: 1080px;
-  /* Alineado con el recuadro de la Navbar */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  /* Empuja todo hacia arriba */
-  align-items: center;
-  padding-top: 2vh;
-  /* Espacio mínimo con la Navbar */
+.tabla-style tr {
+  height: 30%;
+  /* Da altura a las filas para que se vean imponentes */
 }
 
-.titulo-sedes {
-  color: red;
-  font-size: clamp(2rem, 5vh, 4rem);
-  font-weight: 800;
-  margin-top: 0;
-  /* Eliminamos margen superior para que suba más */
-  margin-bottom: 5vh;
-  /* Espacio con las tarjetas */
-  text-align: center;
-  text-transform: uppercase;
+.celda-bodega {
+  width: 30%;
+  /* La columna de bodega no necesita ser tan ancha */
+  color: red !important;
 }
 
-.grid-sedes {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 3vh 2vw;
-  width: 100%;
-}
-
-.tarjeta-sede {
-  background: transparent;
+.celda-cliente {
+  width: 70%;
   color: white;
-  border: 4px solid red;
-  padding: 3vh 1vw;
-  font-size: clamp(1.2rem, 2.2vh, 2rem);
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 15px;
-  transition: 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 14vh;
-  /* Ajuste proporcional para que quepan bien */
 }
+

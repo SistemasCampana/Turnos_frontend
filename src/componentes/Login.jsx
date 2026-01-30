@@ -13,34 +13,42 @@ export default function Login({ onLogin }) {
 
     try {
       const res = await axios.post(
-        "https://turnos-backend-pcyf.onrender.com/api/login",
+         "https://turnos-backend-pcyf.onrender.com/api/login",
+        // "http://127.0.0.1:5000/api/login",
         { username, password }
       );
 
       // 🔹 1. GUARDAR DATOS EN LOCALSTORAGE
       localStorage.setItem("token", res.data.access_token);
-      // Guardamos el rol siempre en minúsculas para evitar errores de comparación
+
+      // Convertimos a minúsculas para que coincida con RutaProtegida en App.jsx
       const rolRecibido = res.data.rol.toLowerCase();
       localStorage.setItem("rol", rolRecibido);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("sede", res.data.sede);
 
-      // 🔹 2. NOTIFICAR LOGIN EXITOSO AL APP.JS
+      // 🔹 2. NOTIFICAR LOGIN EXITOSO
       if (typeof onLogin === "function") {
         onLogin();
       }
 
-      // 🔹 3. REDIRECCIÓN DIRECTA (SIN ENREDOS)
+      // 🔹 3. REDIRECCIÓN SEGÚN ROL
+      // Visor va a la pantalla de turnos
       if (rolRecibido === "visor") {
         navigate("/pantalla");
-      } else {
-        // Tanto Administrador como Cajero entran al Panel
+      }
+      // Administrador va a la pantalla principal (donde puede elegir sedes o ver todo)
+      else if (rolRecibido === "administrador") {
+        navigate("/pantalla");
+      }
+      // Cajero va directo al panel de operación
+      else {
         navigate("/panel");
       }
 
     } catch (error) {
-      // Si el servidor responde 401 (como en tu imagen), mostramos el error real
       console.error("📡 Error:", error.response?.data || error.message);
+      // Si el backend modificado arroja un 401 o 403, el mensaje será claro
       alert(error.response?.data?.msg || "Usuario o contraseña incorrectos");
     }
   };
@@ -48,12 +56,13 @@ export default function Login({ onLogin }) {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form animate">
-        <h2>Iniciar Sesión</h2>
+        <h2>Gestor de Turnos</h2>
         <input
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Usuario"
           required
+          autoComplete="username"
         />
         <input
           type="password"
@@ -61,8 +70,9 @@ export default function Login({ onLogin }) {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Contraseña"
           required
+          autoComplete="current-password"
         />
-        <button type="submit">Ingresar</button>
+        <button type="submit">Ingresar al Sistema</button>
       </form>
     </div>
   );
