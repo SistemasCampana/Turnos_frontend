@@ -24,7 +24,6 @@ export default function PanelCajero() {
     const rol = localStorage.getItem("rol")?.toLowerCase();
     const sedeUsuario = localStorage.getItem("sede");
 
-    // Si no hay token o el rol no es autorizado, al login
     if (!rol || (rol !== "cajero" && rol !== "administrador")) {
       navigate("/");
       return;
@@ -34,7 +33,6 @@ export default function PanelCajero() {
       setEsAdmin(true);
     }
 
-    // Carga la sede asignada (El admin puede cambiarla luego)
     if (sedeUsuario) {
       setSede(sedeUsuario);
     }
@@ -44,7 +42,6 @@ export default function PanelCajero() {
   useEffect(() => {
     if (sede && CONFIGURACION_SEDES[sede]) {
       const bodegas = CONFIGURACION_SEDES[sede];
-      // Si solo hay una bodega, se selecciona sola
       setBodega(bodegas.length === 1 ? bodegas[0].toString() : "");
     } else {
       setBodega("");
@@ -62,11 +59,13 @@ export default function PanelCajero() {
 
     try {
       const token = localStorage.getItem("token");
+
+      // ✅ CORRECCIÓN: Cambiamos la URL a la ruta de creación de turnos (/api/turnos/)
+      // Eliminamos "/informe/<fecha>" que causaba el 404 y 405
       const res = await axios.post(
-         "https://turnos-backend-pcyf.onrender.com/api/turnos/",
-        // "http://127.0.0.1:5000/api/turnos/",
+        "https://turnos-backend-pcyf.onrender.com/api/turnos/",
         { nombre_cliente, bodega, sede },
-        { headers: { Authorization: `Bearer ${token}` } } // Enviamos token por seguridad
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setMensaje(`✅ Turno ${res.data.numero} creado para ${res.data.nombre_cliente}`);
@@ -74,7 +73,8 @@ export default function PanelCajero() {
 
     } catch (error) {
       console.error("Error al asignar turno:", error);
-      const errorMsg = error.response?.data?.error || "Error de conexión";
+      // Si el error viene del backend, mostramos el mensaje específico, si no, error de conexión
+      const errorMsg = error.response?.data?.error || error.response?.data?.message || "Error de conexión con el servidor";
       setMensaje("❌ " + errorMsg);
     }
   };
@@ -88,7 +88,6 @@ export default function PanelCajero() {
           <h2 className="panel-cajero-titulo">Gestión de Turnos</h2>
 
           <div className="info-sesion" style={{ textAlign: 'center', marginBottom: '20px' }}>
-            {/* 🏦 SI ES ADMIN: Puede cambiar de sede. SI ES CAJERO: Solo ve su sede */}
             {esAdmin ? (
               <div className="mb-4">
                 <label className="block mb-1 text-sm text-gray-400">Supervisando Sede:</label>
@@ -97,6 +96,7 @@ export default function PanelCajero() {
                   onChange={(e) => setSede(e.target.value)}
                   className="w-full px-3 py-2 rounded-md bg-gray-800 text-white border border-red-500"
                 >
+                  <option value="">Seleccione Sede...</option>
                   {Object.keys(CONFIGURACION_SEDES).map(s => (
                     <option key={s} value={s}>{s}</option>
                   ))}
@@ -108,7 +108,6 @@ export default function PanelCajero() {
           </div>
 
           <form onSubmit={llamarTurno} className="space-y-4">
-            {/* BODEGA */}
             <div className="mb-4">
               <label className="block mb-2">Bodega Destino:</label>
               {sede && CONFIGURACION_SEDES[sede]?.length > 1 ? (
@@ -133,7 +132,6 @@ export default function PanelCajero() {
               )}
             </div>
 
-            {/* CLIENTE */}
             <div className="mb-4">
               <label className="block mb-2">Nombre del Cliente:</label>
               <input
